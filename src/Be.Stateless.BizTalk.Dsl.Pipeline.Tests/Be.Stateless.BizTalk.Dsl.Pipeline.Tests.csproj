@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <RootNamespace>Be.Stateless.BizTalk</RootNamespace>
+    <AssemblyTitle>Be.Stateless.BizTalk.Dsl.Pipeline.Tests</AssemblyTitle>
+    <Description>Unit tests for BizTalk.Factory's pipeline definition DSL for general purpose BizTalk Server pipeline definition.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Dsl\Pipeline\Data\XmlMicroPipelineDocument.xml" />
+    <None Remove="Dsl\Pipeline\Data\XmlRegularPipelineDocument.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Dsl\Pipeline\Data\XmlMicroPipelineDocument.xml" />
+    <EmbeddedResource Include="Dsl\Pipeline\Data\XmlRegularPipelineDocument.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Be.Stateless.BizTalk.Messaging.Unit" Version="2.0.20208.28584" />
+    <PackageReference Include="Be.Stateless.BizTalk.Pipeline.Components" Version="2.0.20208.37990" />
+    <PackageReference Include="BizTalk.Server.2020.Runtime" Version="1.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.msbuild" Version="2.9.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="FluentAssertions" Version="5.10.3" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
+    <PackageReference Include="Moq" Version="4.13.1" />
+    <PackageReference Include="xunit.core" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Be.Stateless.BizTalk.Dsl.Pipeline\Be.Stateless.BizTalk.Dsl.Pipeline.csproj" />
+  </ItemGroup>
+
+</Project>
