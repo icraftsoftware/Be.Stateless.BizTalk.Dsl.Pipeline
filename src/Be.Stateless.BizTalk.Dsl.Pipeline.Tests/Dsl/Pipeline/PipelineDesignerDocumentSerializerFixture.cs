@@ -20,6 +20,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Reflection;
+using System.Xml.Linq;
 using Be.Stateless.BizTalk.Component;
 using Be.Stateless.BizTalk.ContextProperties;
 using Be.Stateless.BizTalk.Dsl.Pipeline.Extensions;
@@ -39,24 +40,24 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 		public void SerializeMicroPipeline()
 		{
 			var pipelineDocument = new XmlMicroPipeline().GetPipelineDesignerDocumentSerializer();
-			pipelineDocument.Serialize().Should().Be(
-				ResourceManager.Load(
-					Assembly.GetExecutingAssembly(),
-					"Be.Stateless.BizTalk.Dsl.Pipeline.Data.XmlMicroPipelineDocument.xml",
-					s => new StreamReader(s).ReadToEnd()));
+			XDocument.Parse(pipelineDocument.Serialize()).Should().BeEquivalentTo(
+				XDocument.Parse(
+					ResourceManager.Load(
+						Assembly.GetExecutingAssembly(),
+						"Be.Stateless.BizTalk.Dsl.Pipeline.Data.XmlMicroPipelineDocument.xml",
+						s => new StreamReader(s).ReadToEnd())));
 		}
 
 		[Fact]
 		public void SerializeRegularPipeline()
 		{
 			var pipelineDocument = new XmlRegularPipeline().GetPipelineDesignerDocumentSerializer();
-			// see http://msdn.microsoft.com/en-us/library/system.xml.linq.xnode.deepequals.aspx as an alternative
-			// comparison method, but not so helpful when there are differences
-			pipelineDocument.Serialize().Should().Be(
-				ResourceManager.Load(
-					Assembly.GetExecutingAssembly(),
-					"Be.Stateless.BizTalk.Dsl.Pipeline.Data.XmlRegularPipelineDocument.xml",
-					s => new StreamReader(s).ReadToEnd()));
+			XDocument.Parse(pipelineDocument.Serialize()).Should().BeEquivalentTo(
+				XDocument.Parse(
+					ResourceManager.Load(
+						Assembly.GetExecutingAssembly(),
+						"Be.Stateless.BizTalk.Dsl.Pipeline.Data.XmlRegularPipelineDocument.xml",
+						s => new StreamReader(s).ReadToEnd())));
 		}
 
 		private class XmlRegularPipeline : ReceivePipeline
