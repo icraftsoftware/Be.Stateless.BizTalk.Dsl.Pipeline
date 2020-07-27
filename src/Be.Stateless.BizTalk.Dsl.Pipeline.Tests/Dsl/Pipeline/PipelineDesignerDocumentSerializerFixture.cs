@@ -18,7 +18,6 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Reflection;
 using System.Xml.Linq;
 using Be.Stateless.BizTalk.Component;
@@ -41,11 +40,10 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 		{
 			var pipelineDocument = new XmlMicroPipeline().GetPipelineDesignerDocumentSerializer();
 			XDocument.Parse(pipelineDocument.Serialize()).Should().BeEquivalentTo(
-				XDocument.Parse(
-					ResourceManager.Load(
-						Assembly.GetExecutingAssembly(),
-						"Be.Stateless.BizTalk.Dsl.Pipeline.Data.XmlMicroPipelineDocument.xml",
-						s => new StreamReader(s).ReadToEnd())));
+				ResourceManager.Load(
+					Assembly.GetExecutingAssembly(),
+					"Be.Stateless.BizTalk.Dsl.Pipeline.Data.XmlMicroPipelineDocument.xml",
+					XDocument.Load));
 		}
 
 		[Fact]
@@ -53,11 +51,10 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 		{
 			var pipelineDocument = new XmlRegularPipeline().GetPipelineDesignerDocumentSerializer();
 			XDocument.Parse(pipelineDocument.Serialize()).Should().BeEquivalentTo(
-				XDocument.Parse(
-					ResourceManager.Load(
-						Assembly.GetExecutingAssembly(),
-						"Be.Stateless.BizTalk.Dsl.Pipeline.Data.XmlRegularPipelineDocument.xml",
-						s => new StreamReader(s).ReadToEnd())));
+				ResourceManager.Load(
+					Assembly.GetExecutingAssembly(),
+					"Be.Stateless.BizTalk.Dsl.Pipeline.Data.XmlRegularPipelineDocument.xml",
+					XDocument.Load));
 		}
 
 		private class XmlRegularPipeline : ReceivePipeline
