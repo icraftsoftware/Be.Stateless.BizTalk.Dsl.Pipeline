@@ -23,7 +23,7 @@ using Microsoft.BizTalk.Component.Interop;
 namespace Be.Stateless.BizTalk.Dsl.Pipeline
 {
 	[SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "Public DSL API.")]
-	[SuppressMessage("ReSharper", "UnusedMethodReturnValue.Global",Justification = "Public DSL API.")]
+	[SuppressMessage("ReSharper", "UnusedMethodReturnValue.Global", Justification = "Public DSL API.")]
 	public abstract class ReceivePipeline : Pipeline<IReceivePipelineStageList>
 	{
 		protected internal ReceivePipeline() : base(new ReceivePipelineStageList()) { }

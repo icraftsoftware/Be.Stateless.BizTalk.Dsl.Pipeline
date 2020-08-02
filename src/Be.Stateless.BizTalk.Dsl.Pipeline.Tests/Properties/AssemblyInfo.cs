@@ -16,18 +16,6 @@
 
 #endregion
 
-namespace Be.Stateless.BizTalk.Dsl.Pipeline.Extensions
-{
-	public static class PipelineExtensions
-	{
-		public static IDslSerializer GetPipelineDesignerDocumentSerializer(this IVisitable<IPipelineVisitor> pipeline)
-		{
-			return new PipelineDesignerDocumentSerializer(pipeline);
-		}
+using Xunit;
 
-		public static IDslSerializer GetPipelineCompilerDocumentSerializer(this IVisitable<IPipelineVisitor> pipeline)
-		{
-			return new PipelineCompilerDocumentSerializer(pipeline);
-		}
-	}
-}
+[assembly: CollectionBehavior(DisableTestParallelization = true)]

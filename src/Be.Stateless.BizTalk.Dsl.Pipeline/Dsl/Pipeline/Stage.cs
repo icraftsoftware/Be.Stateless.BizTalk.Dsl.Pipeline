@@ -17,15 +17,21 @@
 #endregion
 
 using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Microsoft.BizTalk.Component.Interop;
+using Microsoft.BizTalk.PipelineEditor.PolicyFile;
+using PipelinePolicy = Microsoft.BizTalk.PipelineEditor.PolicyFile.Document;
+using StagePolicy = Microsoft.BizTalk.PipelineEditor.PolicyFile.Stage;
 
 namespace Be.Stateless.BizTalk.Dsl.Pipeline
 {
 	public class Stage : IStage, IVisitable<IPipelineVisitor>
 	{
-		internal Stage(Guid categoryId)
+		internal Stage(Guid categoryId, PipelinePolicy pipelinePolicy)
 		{
 			Category = StageCategory.FromKnownCategoryId(categoryId);
+			StagePolicy = pipelinePolicy.Stages.Cast<StagePolicy>().Single(s => new Guid(s.StageIdGuid) == Category.Id);
 			Components = new ComponentList(this);
 		}
 
@@ -35,13 +41,17 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 
 		public IComponentList Components { get; }
 
-		public IStage AddComponent<T>(T component) where T : IBaseComponent, IPersistPropertyBag
+		public StagePolicy StagePolicy { get; }
+
+		public IStage AddComponent<T>(T component) where T : IBaseComponent, IComponentUI, IPersistPropertyBag
 		{
+			// see Microsoft.BizTalk.PipelineEditor.PipelineCompiler::ValidateStage, Microsoft.BizTalk.PipelineOM, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+			EnsureUniqueComponent(component);
 			Components.Add(component);
 			return this;
 		}
 
-		public IStage AddComponent<T>(Action<T> componentConfigurator) where T : IBaseComponent, IPersistPropertyBag, new()
+		public IStage AddComponent<T>(Action<T> componentConfigurator) where T : IBaseComponent, IComponentUI, IPersistPropertyBag, new()
 		{
 			if (componentConfigurator == null) throw new ArgumentNullException(nameof(componentConfigurator));
 			var component = new T();
@@ -100,12 +110,37 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 
 		#region IVisitable<IPipelineVisitor> Members
 
+		[SuppressMessage("Design", "CA1033:Interface methods should be callable by child types")]
 		void IVisitable<IPipelineVisitor>.Accept(IPipelineVisitor visitor)
 		{
+			// see Microsoft.BizTalk.PipelineEditor.PipelineCompiler::ValidateStage, Microsoft.BizTalk.PipelineOM, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+			EnsureAtLeastComponent();
+			EnsureAtMostComponent();
 			visitor.VisitStage(this);
 			((IVisitable<IPipelineVisitor>) Components).Accept(visitor);
 		}
 
 		#endregion
+
+		private void EnsureAtLeastComponent()
+		{
+			// see Microsoft.BizTalk.PipelineEditor.PipelineCompiler::ValidateStage, Microsoft.BizTalk.PipelineOM, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+			var minOccurs = StagePolicy.MinOccurs;
+			if (Components.Count < minOccurs) throw new ArgumentException($"Stage '{Category.Name}' should contain at least {minOccurs} components.");
+		}
+
+		private void EnsureAtMostComponent()
+		{
+			// see Microsoft.BizTalk.PipelineEditor.PipelineCompiler::ValidateStage, Microsoft.BizTalk.PipelineOM, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+			var maxOccurs = StagePolicy.MaxOccurs < 0 ? byte.MaxValue : StagePolicy.MaxOccurs;
+			if (Components.Count > maxOccurs) throw new ArgumentException($"Stage '{Category.Name}' should contain at most {maxOccurs} components.");
+		}
+
+		private void EnsureUniqueComponent<T>(T component) where T : IBaseComponent, IPersistPropertyBag
+		{
+			// see Microsoft.BizTalk.PipelineEditor.PipelineCompiler::ValidateStage, Microsoft.BizTalk.PipelineOM, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+			if (StagePolicy.ExecutionMethod == ExecMethod.All && Components.Contains<T>())
+				throw new ArgumentException($"Stage '{Category.Name}' has multiple '{component.GetType().FullName}' components.");
+		}
 	}
 }

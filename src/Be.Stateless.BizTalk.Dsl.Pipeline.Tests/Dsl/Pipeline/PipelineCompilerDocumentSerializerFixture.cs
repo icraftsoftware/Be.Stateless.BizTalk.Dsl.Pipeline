@@ -26,27 +26,27 @@ using Xunit;
 
 namespace Be.Stateless.BizTalk.Dsl.Pipeline
 {
-	public class PipelineDesignerDocumentSerializerFixture
+	public class PipelineCompilerDocumentSerializerFixture
 	{
 		[Fact]
 		public void SerializeMicroPipeline()
 		{
-			var pipelineDocument = new XmlMicroPipeline().GetPipelineDesignerDocumentSerializer();
+			var pipelineDocument = new XmlMicroPipeline().GetPipelineCompilerDocumentSerializer();
 			XDocument.Parse(pipelineDocument.Serialize()).Should().BeEquivalentTo(
 				ResourceManager.Load(
 					Assembly.GetExecutingAssembly(),
-					$"{GetType().Namespace}.Resources.XmlMicroPipelineDesignerDocument.xml",
+					$"{GetType().Namespace}.Resources.XmlMicroPipelineCompilerDocument.xml",
 					XDocument.Load));
 		}
 
 		[Fact]
 		public void SerializeRegularPipeline()
 		{
-			var pipelineDocument = new XmlRegularPipeline().GetPipelineDesignerDocumentSerializer();
+			var pipelineDocument = new XmlRegularPipeline().GetPipelineCompilerDocumentSerializer();
 			XDocument.Parse(pipelineDocument.Serialize()).Should().BeEquivalentTo(
 				ResourceManager.Load(
 					Assembly.GetExecutingAssembly(),
-					$"{GetType().Namespace}.Resources.XmlRegularPipelineDesignerDocument.xml",
+					$"{GetType().Namespace}.Resources.XmlRegularPipelineCompilerDocument.xml",
 					XDocument.Load));
 		}
 	}

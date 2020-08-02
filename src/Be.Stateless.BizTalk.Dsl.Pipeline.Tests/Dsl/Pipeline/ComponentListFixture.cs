@@ -30,14 +30,14 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 		[Fact]
 		public void AddComponentToCompatibleStage()
 		{
-			var list = new ComponentList(new Stage(StageCategory.Decoder.Id));
+			var list = new ComponentList(new Stage(StageCategory.Decoder.Id, PolicyFile.BTSReceivePolicy.Value));
 			Action(() => list.Add(new FailedMessageRoutingEnablerComponent())).Should().NotThrow();
 		}
 
 		[Fact]
 		public void AddComponentToIncompatibleStageThrows()
 		{
-			var list = new ComponentList(new Stage(StageCategory.Decoder.Id));
+			var list = new ComponentList(new Stage(StageCategory.Decoder.Id, PolicyFile.BTSReceivePolicy.Value));
 			Action(() => list.Add(new PartyRes())).Should()
 				.Throw<ArgumentException>()
 				.WithMessage("Party resolution is made for any of the PartyResolver stages and is not compatible with a Decoder stage.*");
@@ -47,7 +47,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 		public void FetchComponentFromComponentList()
 		{
 			var component = new FailedMessageRoutingEnablerComponent();
-			var list = new ComponentList(new Stage(StageCategory.Decoder.Id)) {
+			var list = new ComponentList(new Stage(StageCategory.Decoder.Id, PolicyFile.BTSReceivePolicy.Value)) {
 				component
 			};
 
@@ -57,7 +57,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 		[Fact]
 		public void FetchUnregisteredComponentFromComponentListThrows()
 		{
-			var list = new ComponentList(new Stage(StageCategory.Decoder.Id)) {
+			var list = new ComponentList(new Stage(StageCategory.Decoder.Id, PolicyFile.BTSReceivePolicy.Value)) {
 				new FailedMessageRoutingEnablerComponent()
 			};
 

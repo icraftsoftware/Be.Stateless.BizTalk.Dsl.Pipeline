@@ -8,18 +8,22 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Dsl\Pipeline\Data\XmlMicroPipelineDocument.xml" />
-    <None Remove="Dsl\Pipeline\Data\XmlRegularPipelineDocument.xml" />
+    <None Remove="Dsl\Pipeline\Resources\XmlMicroPipelineCompilerDocument.xml" />
+    <None Remove="Dsl\Pipeline\Resources\XmlMicroPipelineDesignerDocument.xml" />
+    <None Remove="Dsl\Pipeline\Resources\XmlRegularPipelineCompilerDocument.xml" />
+    <None Remove="Dsl\Pipeline\Resources\XmlRegularPipelineDesignerDocument.xml" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Dsl\Pipeline\Data\XmlMicroPipelineDocument.xml" />
-    <EmbeddedResource Include="Dsl\Pipeline\Data\XmlRegularPipelineDocument.xml" />
+    <EmbeddedResource Include="Dsl\Pipeline\Resources\XmlMicroPipelineCompilerDocument.xml" />
+    <EmbeddedResource Include="Dsl\Pipeline\Resources\XmlMicroPipelineDesignerDocument.xml" />
+    <EmbeddedResource Include="Dsl\Pipeline\Resources\XmlRegularPipelineCompilerDocument.xml" />
+    <EmbeddedResource Include="Dsl\Pipeline\Resources\XmlRegularPipelineDesignerDocument.xml" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Be.Stateless.BizTalk.Messaging.Unit" Version="2.0.20208.28584" />
-    <PackageReference Include="Be.Stateless.BizTalk.Pipeline.Components" Version="2.0.20208.37990" />
+    <PackageReference Include="Be.Stateless.BizTalk.Messaging.Unit" Version="2.0.20214.59077" />
+    <PackageReference Include="Be.Stateless.BizTalk.Pipeline.Components" Version="2.0.20215.27656" />
     <PackageReference Include="BizTalk.Server.2020.Runtime" Version="1.0.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -36,6 +40,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Xunit.SkippableFact" Version="1.4.13" />
   </ItemGroup>
 
   <ItemGroup>

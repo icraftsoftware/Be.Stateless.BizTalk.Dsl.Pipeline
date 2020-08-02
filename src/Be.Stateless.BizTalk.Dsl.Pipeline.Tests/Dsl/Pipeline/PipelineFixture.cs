@@ -18,6 +18,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using Be.Stateless.BizTalk.Dsl.Pipeline.Dummies;
 using FluentAssertions;
 using Moq;
 using Xunit;
@@ -76,9 +77,5 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 		{
 			public InvalidPipeline() : base(new ReceivePipelineStageList()) { }
 		}
-
-		private class ReceivePipelineImpl : ReceivePipeline { }
-
-		private class SendPipelineImpl : SendPipeline { }
 	}
 }

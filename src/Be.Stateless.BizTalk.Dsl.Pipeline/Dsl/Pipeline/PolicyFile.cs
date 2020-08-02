@@ -16,29 +16,19 @@
 
 #endregion
 
-using System.Xml.Serialization;
-using Microsoft.BizTalk.PipelineEditor.PipelineFile;
+using System;
+using System.Diagnostics.CodeAnalysis;
+using Be.Stateless.BizTalk.Dsl.Pipeline.Extensions;
+using Microsoft.BizTalk.PipelineEditor.PolicyFile;
 
 namespace Be.Stateless.BizTalk.Dsl.Pipeline
 {
-	public class PipelineDesignerDocumentSerializer : PipelineSerializer
+	internal static class PolicyFile
 	{
-		internal PipelineDesignerDocumentSerializer(IVisitable<IPipelineVisitor> pipeline) : base(pipeline) { }
+		[SuppressMessage("ReSharper", "InconsistentNaming")]
+		internal static readonly Lazy<Document> BTSReceivePolicy = new Lazy<Document>(() => PolicyFileExtensions.LoadPolicyDocument(nameof(BTSReceivePolicy) + ".xml"));
 
-		#region Base Class Member Overrides
-
-		protected override Document CreatePipelineFileDocument()
-		{
-			var visitor = new PipelineDesignerDocumentBuilderVisitor();
-			Pipeline.Accept(visitor);
-			return visitor.Document;
-		}
-
-		protected override XmlSerializer CreateXmlSerializer()
-		{
-			return new XmlSerializer(typeof(Document));
-		}
-
-		#endregion
+		[SuppressMessage("ReSharper", "InconsistentNaming")]
+		internal static readonly Lazy<Document> BTSTransmitPolicy = new Lazy<Document>(() => PolicyFileExtensions.LoadPolicyDocument(nameof(BTSTransmitPolicy) + ".xml"));
 	}
 }

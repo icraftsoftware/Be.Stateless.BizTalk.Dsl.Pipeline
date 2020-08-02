@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Be.Stateless.BizTalk.Dsl.Pipeline.Extensions;
 using Be.Stateless.Linq.Extensions;
 using Microsoft.BizTalk.Component.Interop;
 
@@ -40,6 +41,11 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 			component.EnsureIsCompatibleWith(Stage.Category);
 			base.Add(new PipelineComponentDescriptor<T>(component));
 			return this;
+		}
+
+		public bool Contains<T>() where T : IBaseComponent, IPersistPropertyBag
+		{
+			return this.OfType<PipelineComponentDescriptor<T>>().Any();
 		}
 
 		public T Component<T>() where T : IBaseComponent, IPersistPropertyBag
@@ -94,6 +100,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 
 		#region IVisitable<IPipelineVisitor> Members
 
+		[SuppressMessage("Design", "CA1033:Interface methods should be callable by child types")]
 		void IVisitable<IPipelineVisitor>.Accept(IPipelineVisitor visitor)
 		{
 			this.Cast<IVisitable<IPipelineVisitor>>().ForEach(component => component.Accept(visitor));
@@ -104,7 +111,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 		private Stage Stage { get; }
 
 		[SuppressMessage("ReSharper", "UnusedMethodReturnValue.Global", Justification = "Public DSL API.")]
-		public IComponentList Add<T>(T component) where T : IBaseComponent, IPersistPropertyBag
+		public IComponentList Add<T>(T component) where T : IBaseComponent, IComponentUI, IPersistPropertyBag
 		{
 			return ((IComponentList) this).Add(component);
 		}

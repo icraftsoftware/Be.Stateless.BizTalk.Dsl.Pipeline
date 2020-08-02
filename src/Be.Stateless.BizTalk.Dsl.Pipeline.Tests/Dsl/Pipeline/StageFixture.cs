@@ -21,8 +21,11 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Be.Stateless.BizTalk.Component;
 using FluentAssertions;
+using Microsoft.BizTalk.Component;
+using Microsoft.BizTalk.PipelineEditor.PolicyFile;
 using Moq;
 using Xunit;
+using PipelinePolicy = Microsoft.BizTalk.PipelineEditor.PolicyFile.Document;
 using static Be.Stateless.DelegateFactory;
 
 namespace Be.Stateless.BizTalk.Dsl.Pipeline
@@ -33,15 +36,79 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 		[SuppressMessage("ReSharper", "ObjectCreationAsStatement")]
 		public void CanOnlyCreateStageForKnownCategory()
 		{
-			Action(() => new Stage(Guid.NewGuid())).Should().Throw<KeyNotFoundException>();
+			Action(() => new Stage(Guid.NewGuid(), PolicyFile.BTSReceivePolicy.Value)).Should().Throw<KeyNotFoundException>();
+		}
+
+		[Fact]
+		public void EnsureAtLeastComponentThrows()
+		{
+			var pipelinePolicy = new PipelinePolicy {
+				Stages = {
+					new Microsoft.BizTalk.PipelineEditor.PolicyFile.Stage {
+						StageIdGuid = StageCategory.Decoder.Id.ToString(),
+						MinOccurs = 1
+					}
+				}
+			};
+			var stage = new Stage(StageCategory.Decoder.Id, pipelinePolicy);
+
+			Action(() => stage.As<IVisitable<IPipelineVisitor>>().Accept(new Mock<IPipelineVisitor>().Object))
+				.Should().Throw<ArgumentException>()
+				.WithMessage("Stage 'Decoder' should contain at least 1 components.");
+		}
+
+		[Fact]
+		public void EnsureAtMostComponentThrows()
+		{
+			var pipelinePolicy = new PipelinePolicy {
+				Stages = {
+					new Microsoft.BizTalk.PipelineEditor.PolicyFile.Stage {
+						StageIdGuid = StageCategory.AssemblingSerializer.Id.ToString(),
+						ExecutionMethod = ExecMethod.FirstMatch,
+						MaxOccurs = 1
+					}
+				}
+			};
+			var stage = new Stage(StageCategory.AssemblingSerializer.Id, pipelinePolicy);
+			var component = new XmlAsmComp();
+			stage.AddComponent(component);
+			stage.AddComponent(component);
+
+			Action(() => stage.As<IVisitable<IPipelineVisitor>>().Accept(new Mock<IPipelineVisitor>().Object))
+				.Should().Throw<ArgumentException>()
+				.WithMessage("Stage 'AssemblingSerializer' should contain at most 1 components.");
+		}
+
+		[Fact]
+		public void EnsureUniqueComponentSucceedsIfStageExecutionMethodIsNotAll()
+		{
+			var stage = new Stage(StageCategory.DisassemblingParser.Id, PolicyFile.BTSReceivePolicy.Value);
+			var component = new XmlDasmComp();
+
+			stage.AddComponent(component);
+
+			Action(() => stage.AddComponent(component)).Should().NotThrow();
+		}
+
+		[Fact]
+		public void EnsureUniqueComponentThrowsIfStageExecutionMethodIsAll()
+		{
+			var stage = new Stage(StageCategory.Decoder.Id, PolicyFile.BTSReceivePolicy.Value);
+			var component = new FailedMessageRoutingEnablerComponent();
+
+			stage.AddComponent(component);
+
+			Action(() => stage.AddComponent(component))
+				.Should().Throw<ArgumentException>()
+				.WithMessage($"Stage 'Decoder' has multiple '{component.GetType().FullName}' components.");
 		}
 
 		[Fact]
 		public void FetchComponentFromStage()
 		{
+			var stage = new Stage(StageCategory.Decoder.Id, PolicyFile.BTSReceivePolicy.Value);
 			var component = new FailedMessageRoutingEnablerComponent();
 
-			var stage = new Stage(StageCategory.Decoder.Id);
 			stage.AddComponent(component);
 
 			stage.Component<FailedMessageRoutingEnablerComponent>().Should().BeSameAs(component);
@@ -54,7 +121,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 			var failedMessageRoutingEnablerComponent = new FailedMessageRoutingEnablerComponent();
 			var microPipelineComponent = new MicroPipelineComponent();
 
-			var sut = new Stage(StageCategory.Any.Id);
+			var sut = new Stage(StageCategory.Any.Id, PolicyFile.BTSTransmitPolicy.Value);
 			sut.AddComponent(failedMessageRoutingEnablerComponent)
 				.AddComponent(microPipelineComponent);
 

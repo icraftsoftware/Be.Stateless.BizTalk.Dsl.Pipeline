@@ -17,15 +17,17 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Be.Stateless.Linq.Extensions;
 
 namespace Be.Stateless.BizTalk.Dsl.Pipeline
 {
-	public class StageList : List<Stage>, IVisitable<IPipelineVisitor>
+	public abstract class StageList : List<Stage>, IVisitable<IPipelineVisitor>
 	{
 		#region IVisitable<IPipelineVisitor> Members
 
+		[SuppressMessage("Design", "CA1033:Interface methods should be callable by child types")]
 		void IVisitable<IPipelineVisitor>.Accept(IPipelineVisitor visitor)
 		{
 			this.Cast<IVisitable<IPipelineVisitor>>().ForEach(stage => stage.Accept(visitor));

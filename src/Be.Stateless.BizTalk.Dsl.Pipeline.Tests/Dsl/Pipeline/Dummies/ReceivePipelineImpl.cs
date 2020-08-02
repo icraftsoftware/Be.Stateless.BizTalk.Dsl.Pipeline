@@ -16,29 +16,16 @@
 
 #endregion
 
-using System.Xml.Serialization;
-using Microsoft.BizTalk.PipelineEditor.PipelineFile;
+using System;
 
-namespace Be.Stateless.BizTalk.Dsl.Pipeline
+namespace Be.Stateless.BizTalk.Dsl.Pipeline.Dummies
 {
-	public class PipelineDesignerDocumentSerializer : PipelineSerializer
+	internal class ReceivePipelineImpl : ReceivePipeline
 	{
-		internal PipelineDesignerDocumentSerializer(IVisitable<IPipelineVisitor> pipeline) : base(pipeline) { }
-
-		#region Base Class Member Overrides
-
-		protected override Document CreatePipelineFileDocument()
+		public ReceivePipelineImpl()
 		{
-			var visitor = new PipelineDesignerDocumentBuilderVisitor();
-			Pipeline.Accept(visitor);
-			return visitor.Document;
+			Description = "A receive pipeline.";
+			Version = new Version(5, 6);
 		}
-
-		protected override XmlSerializer CreateXmlSerializer()
-		{
-			return new XmlSerializer(typeof(Document));
-		}
-
-		#endregion
 	}
 }

@@ -16,10 +16,11 @@
 
 #endregion
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Be.Stateless.BizTalk.Component;
+using Be.Stateless.BizTalk.Dsl.Pipeline.Dummies;
+using Be.Stateless.BizTalk.Dsl.Pipeline.Extensions;
 using FluentAssertions;
 using Microsoft.BizTalk.PipelineEditor;
 using Microsoft.BizTalk.PipelineEditor.PipelineFile;
@@ -35,7 +36,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 		{
 			var componentDescriptor = new PipelineComponentDescriptor<FailedMessageRoutingEnablerComponent>(new FailedMessageRoutingEnablerComponent());
 
-			var visitor = new Visitor();
+			var visitor = new VisitorSpy();
 			var componentInfo = visitor.CreateComponentInfo(componentDescriptor);
 
 			var expectedProperties = new[] {
@@ -57,10 +58,10 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 		{
 			var pipeline = new ReceivePipelineImpl();
 
-			var visitor = new Visitor();
+			var visitor = new VisitorSpy();
 			var pipelineDocument = visitor.CreatePipelineDocument(pipeline);
 
-			pipelineDocument.PolicyFilePath.Should().Be("BTSReceivePolicy.xml");
+			pipelineDocument.PolicyFilePath.Should().Be(pipeline.GetPolicyFileName());
 			pipelineDocument.Description.Should().Be("A receive pipeline.");
 			pipelineDocument.MajorVersion.Should().Be(5);
 			pipelineDocument.MinorVersion.Should().Be(6);
@@ -69,24 +70,15 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 		[Fact]
 		public void CreateStageDocument()
 		{
-			var stage = new Stage(StageCategory.Decoder.Id);
+			var stage = new Stage(StageCategory.Decoder.Id, PolicyFile.BTSReceivePolicy.Value);
 
-			var visitor = new Visitor();
+			var visitor = new VisitorSpy();
 			var stageDocument = visitor.CreateStageDocument(stage);
 
 			stageDocument.CategoryId.Should().Be(StageCategory.Decoder.Id);
 		}
 
-		private class ReceivePipelineImpl : ReceivePipeline
-		{
-			public ReceivePipelineImpl()
-			{
-				Description = "A receive pipeline.";
-				Version = new Version(5, 6);
-			}
-		}
-
-		private class Visitor : PipelineDesignerDocumentBuilderVisitor
+		private class VisitorSpy : PipelineDesignerDocumentBuilderVisitor
 		{
 			public new ComponentInfo CreateComponentInfo(IPipelineComponentDescriptor componentDescriptor)
 			{

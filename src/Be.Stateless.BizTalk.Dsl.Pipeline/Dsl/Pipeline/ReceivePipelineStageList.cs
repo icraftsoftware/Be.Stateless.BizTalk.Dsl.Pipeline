@@ -22,10 +22,10 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 	{
 		internal ReceivePipelineStageList()
 		{
-			Decode = Add(new Stage(StageCategory.Decoder.Id));
-			Disassemble = Add(new Stage(StageCategory.DisassemblingParser.Id));
-			Validate = Add(new Stage(StageCategory.Validator.Id));
-			ResolveParty = Add(new Stage(StageCategory.PartyResolver.Id));
+			Decode = Add(new Stage(StageCategory.Decoder.Id, PolicyFile.BTSReceivePolicy.Value));
+			Disassemble = Add(new Stage(StageCategory.DisassemblingParser.Id, PolicyFile.BTSReceivePolicy.Value));
+			Validate = Add(new Stage(StageCategory.Validator.Id, PolicyFile.BTSReceivePolicy.Value));
+			ResolveParty = Add(new Stage(StageCategory.PartyResolver.Id, PolicyFile.BTSReceivePolicy.Value));
 		}
 
 		#region IReceivePipelineStageList Members

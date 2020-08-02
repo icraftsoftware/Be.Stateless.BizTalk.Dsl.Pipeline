@@ -22,9 +22,9 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 	{
 		internal SendPipelineStageList()
 		{
-			PreAssemble = Add(new Stage(StageCategory.Any.Id));
-			Assemble = Add(new Stage(StageCategory.AssemblingSerializer.Id));
-			Encode = Add(new Stage(StageCategory.Encoder.Id));
+			PreAssemble = Add(new Stage(StageCategory.Any.Id, PolicyFile.BTSTransmitPolicy.Value));
+			Assemble = Add(new Stage(StageCategory.AssemblingSerializer.Id, PolicyFile.BTSTransmitPolicy.Value));
+			Encode = Add(new Stage(StageCategory.Encoder.Id, PolicyFile.BTSTransmitPolicy.Value));
 		}
 
 		#region ISendPipelineStageList Members

@@ -19,6 +19,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.BizTalk.Component.Interop;
+using StagePolicy = Microsoft.BizTalk.PipelineEditor.PolicyFile.Stage;
 
 namespace Be.Stateless.BizTalk.Dsl.Pipeline
 {
@@ -29,10 +30,12 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 
 		IComponentList Components { get; }
 
-		IStage AddComponent<T>(T component) where T : IBaseComponent, IPersistPropertyBag;
+		StagePolicy StagePolicy { get; }
+
+		IStage AddComponent<T>(T component) where T : IBaseComponent, IComponentUI, IPersistPropertyBag;
 
 		[SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "Public DSL API.")]
-		IStage AddComponent<T>(Action<T> componentConfigurator) where T : IBaseComponent, IPersistPropertyBag, new();
+		IStage AddComponent<T>(Action<T> componentConfigurator) where T : IBaseComponent, IComponentUI, IPersistPropertyBag, new();
 
 		T Component<T>() where T : IBaseComponent, IPersistPropertyBag;
 
