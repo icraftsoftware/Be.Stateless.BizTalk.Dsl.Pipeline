@@ -18,10 +18,8 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Be.Stateless.BizTalk.Dsl.Pipeline.Extensions;
 using Be.Stateless.Linq.Extensions;
-using Microsoft.BizTalk.PipelineEditor;
 using Microsoft.BizTalk.PipelineEditor.PipelineFile;
 using StageDocument = Microsoft.BizTalk.PipelineEditor.PipelineFile.Stage;
 
@@ -66,9 +64,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 				CachedDisplayName = componentDescriptor.Name,
 				CachedIsManaged = true
 			};
-			var bag = new PropertyBag();
-			componentDescriptor.Save(bag, false, false);
-			bag.Properties.Cast<PropertyContents>().ForEach(property => componentInfo.ComponentProperties.Add(property));
+			componentDescriptor.PropertyContents.ForEach(property => componentInfo.ComponentProperties.Add(property));
 			return componentInfo;
 		}
 

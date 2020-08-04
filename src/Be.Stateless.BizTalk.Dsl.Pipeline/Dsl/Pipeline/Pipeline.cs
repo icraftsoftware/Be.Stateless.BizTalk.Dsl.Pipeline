@@ -37,6 +37,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 		{
 			Stages = stages;
 			Version = new Version(1, 0);
+			VersionDependentGuid = Guid.NewGuid();
 		}
 
 		#region IFluentInterface Members
@@ -79,5 +80,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 		public T Stages { get; }
 
 		public Version Version { get; protected set; }
+
+		public Guid VersionDependentGuid { get; set; }
 	}
 }

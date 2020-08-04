@@ -8,17 +8,22 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Dsl\Pipeline\Resources\XmlMicroPipelineCompilerDocument.xml" />
-    <None Remove="Dsl\Pipeline\Resources\XmlMicroPipelineDesignerDocument.xml" />
-    <None Remove="Dsl\Pipeline\Resources\XmlRegularPipelineCompilerDocument.xml" />
-    <None Remove="Dsl\Pipeline\Resources\XmlRegularPipelineDesignerDocument.xml" />
+    <Compile Remove="Dsl\Pipeline\Resources\XmlRegularPipeline.btp.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Dsl\Pipeline\Resources\XmlMicroPipelineCompilerDocument.xml" />
+    <None Remove="Dsl\Pipeline\Resources\XmlMicroPipelineDesignerDocument.xml" />
+    <None Remove="Dsl\Pipeline\Resources\XmlMicroPipelineRuntimeDocument.xml" />
+    <None Remove="Dsl\Pipeline\Resources\XmlRegularPipelineDesignerDocument.xml" />
+    <None Remove="Dsl\Pipeline\Resources\XmlRegularPipelineRuntimeDocument.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Include="Dsl\Pipeline\Resources\XmlMicroPipelineDesignerDocument.xml" />
-    <EmbeddedResource Include="Dsl\Pipeline\Resources\XmlRegularPipelineCompilerDocument.xml" />
+    <EmbeddedResource Include="Dsl\Pipeline\Resources\XmlMicroPipelineRuntimeDocument.xml" />
+    <EmbeddedResource Include="Dsl\Pipeline\Resources\XmlRegularPipeline.btp.cs" />
     <EmbeddedResource Include="Dsl\Pipeline\Resources\XmlRegularPipelineDesignerDocument.xml" />
+    <EmbeddedResource Include="Dsl\Pipeline\Resources\XmlRegularPipelineRuntimeDocument.xml" />
   </ItemGroup>
 
   <ItemGroup>

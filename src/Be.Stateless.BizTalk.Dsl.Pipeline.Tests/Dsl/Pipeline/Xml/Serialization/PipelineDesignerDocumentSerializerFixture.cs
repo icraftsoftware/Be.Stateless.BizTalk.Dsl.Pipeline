@@ -19,34 +19,33 @@
 using System.Reflection;
 using System.Xml.Linq;
 using Be.Stateless.BizTalk.Dsl.Pipeline.Dummies;
-using Be.Stateless.BizTalk.Dsl.Pipeline.Extensions;
 using Be.Stateless.Resources;
 using FluentAssertions;
 using Xunit;
 
-namespace Be.Stateless.BizTalk.Dsl.Pipeline
+namespace Be.Stateless.BizTalk.Dsl.Pipeline.Xml.Serialization
 {
-	public class PipelineCompilerDocumentSerializerFixture
+	public class PipelineDesignerDocumentSerializerFixture
 	{
 		[Fact]
 		public void SerializeMicroPipeline()
 		{
-			var pipelineDocument = new XmlMicroPipeline().GetPipelineCompilerDocumentSerializer();
+			var pipelineDocument = new XmlMicroPipeline().GetPipelineDesignerDocumentSerializer();
 			XDocument.Parse(pipelineDocument.Serialize()).Should().BeEquivalentTo(
 				ResourceManager.Load(
 					Assembly.GetExecutingAssembly(),
-					$"{GetType().Namespace}.Resources.XmlMicroPipelineCompilerDocument.xml",
+					"Be.Stateless.BizTalk.Dsl.Pipeline.Resources.XmlMicroPipelineDesignerDocument.xml",
 					XDocument.Load));
 		}
 
 		[Fact]
 		public void SerializeRegularPipeline()
 		{
-			var pipelineDocument = new XmlRegularPipeline().GetPipelineCompilerDocumentSerializer();
+			var pipelineDocument = new XmlRegularPipeline().GetPipelineDesignerDocumentSerializer();
 			XDocument.Parse(pipelineDocument.Serialize()).Should().BeEquivalentTo(
 				ResourceManager.Load(
 					Assembly.GetExecutingAssembly(),
-					$"{GetType().Namespace}.Resources.XmlRegularPipelineCompilerDocument.xml",
+					"Be.Stateless.BizTalk.Dsl.Pipeline.Resources.XmlRegularPipelineDesignerDocument.xml",
 					XDocument.Load));
 		}
 	}

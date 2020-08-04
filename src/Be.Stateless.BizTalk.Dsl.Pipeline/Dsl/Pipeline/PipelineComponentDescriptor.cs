@@ -17,7 +17,10 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.BizTalk.Component.Interop;
+using Microsoft.BizTalk.PipelineEditor;
 
 namespace Be.Stateless.BizTalk.Dsl.Pipeline
 {
@@ -54,6 +57,16 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 		public string FullName => typeof(T).FullName;
 
 		IPropertyBag IPipelineComponentDescriptor.Properties { get; set; }
+
+		IEnumerable<PropertyContents> IPipelineComponentDescriptor.PropertyContents
+		{
+			get
+			{
+				var bag = new PropertyBag();
+				Save(bag, false, false);
+				return bag.Properties.Cast<PropertyContents>().ToArray();
+			}
+		}
 
 		void IVisitable<IPipelineVisitor>.Accept(IPipelineVisitor visitor)
 		{

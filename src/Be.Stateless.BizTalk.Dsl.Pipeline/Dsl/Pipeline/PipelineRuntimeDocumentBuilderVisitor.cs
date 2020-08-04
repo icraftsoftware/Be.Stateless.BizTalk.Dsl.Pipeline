@@ -23,7 +23,7 @@ using StageDocument = Microsoft.BizTalk.PipelineEditor.PipelineFile.Stage;
 
 namespace Be.Stateless.BizTalk.Dsl.Pipeline
 {
-	public class PipelineCompilerDocumentBuilderVisitor : PipelineDesignerDocumentBuilderVisitor
+	public class PipelineRuntimeDocumentBuilderVisitor : PipelineDesignerDocumentBuilderVisitor
 	{
 		#region Base Class Member Overrides
 

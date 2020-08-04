@@ -18,7 +18,7 @@
 
 using System;
 using Be.Stateless.BizTalk.Component;
-using Be.Stateless.BizTalk.Dsl.Pipeline.Extensions;
+using Be.Stateless.BizTalk.Dsl.Pipeline.Xml.Serialization;
 using FluentAssertions;
 using Microsoft.BizTalk.Component;
 using Xunit;

@@ -22,7 +22,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using Microsoft.BizTalk.PipelineEditor.PipelineFile;
 
-namespace Be.Stateless.BizTalk.Dsl.Pipeline
+namespace Be.Stateless.BizTalk.Dsl.Pipeline.Xml.Serialization
 {
 	public abstract class PipelineSerializer : IDslSerializer
 	{
@@ -37,9 +37,12 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 		{
 			var pipelineDocument = CreatePipelineFileDocument();
 			using (var writer = new StringWriter())
+			using (var xmlTextWriter = new XmlTextWriter(writer))
 			{
+				xmlTextWriter.Formatting = Formatting.Indented;
+				xmlTextWriter.QuoteChar = QuoteChar;
 				var xmlSerializer = CreateXmlSerializer();
-				xmlSerializer.Serialize(writer, pipelineDocument);
+				xmlSerializer.Serialize(xmlTextWriter, pipelineDocument);
 				return writer.ToString();
 			}
 		}
@@ -58,6 +61,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 			using (var xmlTextWriter = new XmlTextWriter(stream, Encoding.Unicode))
 			{
 				xmlTextWriter.Formatting = Formatting.Indented;
+				xmlTextWriter.QuoteChar = QuoteChar;
 				var xmlSerializer = CreateXmlSerializer();
 				xmlSerializer.Serialize(xmlTextWriter, pipelineDocument);
 			}
@@ -66,6 +70,8 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 		#endregion
 
 		protected IVisitable<IPipelineVisitor> Pipeline { get; }
+
+		protected char QuoteChar { get; set; } = '"';
 
 		protected abstract XmlSerializer CreateXmlSerializer();
 

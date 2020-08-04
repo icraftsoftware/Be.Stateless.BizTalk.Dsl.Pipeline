@@ -19,7 +19,7 @@
 using System.Xml.Serialization;
 using Microsoft.BizTalk.PipelineEditor.PipelineFile;
 
-namespace Be.Stateless.BizTalk.Dsl.Pipeline
+namespace Be.Stateless.BizTalk.Dsl.Pipeline.Xml.Serialization
 {
 	public class PipelineDesignerDocumentSerializer : PipelineSerializer
 	{

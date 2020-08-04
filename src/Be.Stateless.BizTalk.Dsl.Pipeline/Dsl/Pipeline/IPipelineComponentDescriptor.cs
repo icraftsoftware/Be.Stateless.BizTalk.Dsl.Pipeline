@@ -16,8 +16,10 @@
 
 #endregion
 
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.BizTalk.Component.Interop;
+using Microsoft.BizTalk.PipelineEditor;
 
 namespace Be.Stateless.BizTalk.Dsl.Pipeline
 {
@@ -32,5 +34,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 	{
 		[SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "Public DSL API.")]
 		IPropertyBag Properties { get; set; }
+
+		IEnumerable<PropertyContents> PropertyContents { get; }
 	}
 }

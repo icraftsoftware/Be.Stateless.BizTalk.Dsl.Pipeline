@@ -28,7 +28,7 @@ using Xunit;
 
 namespace Be.Stateless.BizTalk.Dsl.Pipeline
 {
-	public class PipelineCompilerDocumentBuilderVisitorFixture
+	public class PipelineRuntimeDocumentBuilderVisitorFixture
 	{
 		[Fact]
 		[SuppressMessage("ReSharper", "CoVariantArrayConversion")]
@@ -153,7 +153,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 			stageDocument.PolicyFileStage.Should().BeEquivalentTo(PolicyFile.BTSTransmitPolicy.Value.Stages[0]);
 		}
 
-		private class VisitorSpy : PipelineCompilerDocumentBuilderVisitor
+		private class VisitorSpy : PipelineRuntimeDocumentBuilderVisitor
 		{
 			public new ComponentInfo CreateComponentInfo(IPipelineComponentDescriptor componentDescriptor)
 			{

@@ -21,17 +21,20 @@ using Be.Stateless.Xml.Serialization.Extensions;
 using Microsoft.BizTalk.PipelineEditor.PipelineFile;
 using PolicyFileStage = Microsoft.BizTalk.PipelineEditor.PipelineFile.Stage;
 
-namespace Be.Stateless.BizTalk.Dsl.Pipeline
+namespace Be.Stateless.BizTalk.Dsl.Pipeline.Xml.Serialization
 {
-	public class PipelineCompilerDocumentSerializer : PipelineSerializer
+	public class PipelineRuntimeDocumentSerializer : PipelineSerializer
 	{
-		internal PipelineCompilerDocumentSerializer(IVisitable<IPipelineVisitor> pipeline) : base(pipeline) { }
+		internal PipelineRuntimeDocumentSerializer(IVisitable<IPipelineVisitor> pipeline) : base(pipeline)
+		{
+			QuoteChar = '\'';
+		}
 
 		#region Base Class Member Overrides
 
 		protected override Document CreatePipelineFileDocument()
 		{
-			var visitor = new PipelineCompilerDocumentBuilderVisitor();
+			var visitor = new PipelineRuntimeDocumentBuilderVisitor();
 			Pipeline.Accept(visitor);
 			return visitor.Document;
 		}
