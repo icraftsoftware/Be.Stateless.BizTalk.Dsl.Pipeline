@@ -25,10 +25,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.Xml.Serialization
 {
 	public class PipelineRuntimeDocumentSerializer : PipelineSerializer
 	{
-		internal PipelineRuntimeDocumentSerializer(IVisitable<IPipelineVisitor> pipeline) : base(pipeline)
-		{
-			QuoteChar = '\'';
-		}
+		internal PipelineRuntimeDocumentSerializer(IVisitable<IPipelineVisitor> pipeline) : base(pipeline) { }
 
 		#region Base Class Member Overrides
 

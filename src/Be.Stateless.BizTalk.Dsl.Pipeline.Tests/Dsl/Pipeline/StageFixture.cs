@@ -26,6 +26,7 @@ using Microsoft.BizTalk.PipelineEditor.PolicyFile;
 using Moq;
 using Xunit;
 using PipelinePolicy = Microsoft.BizTalk.PipelineEditor.PolicyFile.Document;
+using StagePolicy = Microsoft.BizTalk.PipelineEditor.PolicyFile.Stage;
 using static Be.Stateless.DelegateFactory;
 
 namespace Be.Stateless.BizTalk.Dsl.Pipeline
@@ -44,7 +45,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 		{
 			var pipelinePolicy = new PipelinePolicy {
 				Stages = {
-					new Microsoft.BizTalk.PipelineEditor.PolicyFile.Stage {
+					new StagePolicy {
 						StageIdGuid = StageCategory.Decoder.Id.ToString(),
 						MinOccurs = 1
 					}
@@ -62,7 +63,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 		{
 			var pipelinePolicy = new PipelinePolicy {
 				Stages = {
-					new Microsoft.BizTalk.PipelineEditor.PolicyFile.Stage {
+					new StagePolicy {
 						StageIdGuid = StageCategory.AssemblingSerializer.Id.ToString(),
 						ExecutionMethod = ExecMethod.FirstMatch,
 						MaxOccurs = 1

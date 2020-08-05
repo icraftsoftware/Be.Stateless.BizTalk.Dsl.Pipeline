@@ -23,28 +23,31 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Microsoft.BizTalk.Component.Interop;
-using Microsoft.BizTalk.PipelineEditor;
 using Microsoft.BizTalk.PipelineEditor.PolicyFile;
+using Microsoft.BizTalk.PipelineOM;
+using PropertyBag = Microsoft.BizTalk.PipelineEditor.PropertyBag;
+using PropertyContents = Microsoft.BizTalk.PipelineEditor.PropertyContents;
 
 namespace Be.Stateless.BizTalk.Dsl.Pipeline.CodeDom
 {
 	internal static class CodeConstructorExtensions
 	{
+		[SuppressMessage("ReSharper", "SwitchExpressionHandlesSomeKnownEnumValuesWithExceptionInDefault", Justification = "See Microsoft PipelineEditor.PipelineCompiler.")]
 		internal static void AddStage(this CodeConstructor constructor, Stage stage)
 		{
 			var executionMode = stage.StagePolicy.ExecutionMethod switch {
-				ExecMethod.All => Microsoft.BizTalk.PipelineOM.ExecutionMode.all,
-				ExecMethod.FirstMatch => Microsoft.BizTalk.PipelineOM.ExecutionMode.firstRecognized,
+				ExecMethod.All => ExecutionMode.all,
+				ExecMethod.FirstMatch => ExecutionMode.firstRecognized,
 				_ => throw new ArgumentOutOfRangeException(
 					nameof(stage),
 					stage.StagePolicy.ExecutionMethod,
-					$"Stage Execution Method is not supported; only {nameof(ExecMethod.All)} and {nameof(ExecMethod.FirstMatch)} are supported.")
+					$"Stage '{stage.Category.Name}' Execution Method is not supported; only {nameof(ExecMethod.All)} and {nameof(ExecMethod.FirstMatch)} are supported.")
 			};
 			var invokeExpression = new CodeMethodInvokeExpression(
 				new CodeThisReferenceExpression(),
 				nameof(Microsoft.BizTalk.PipelineOM.Pipeline.AddStage),
 				new CodeObjectCreateExpression(typeof(Guid), new CodePrimitiveExpression(stage.Category.Id.ToString())),
-				new CodeSnippetExpression($"{typeof(Microsoft.BizTalk.PipelineOM.ExecutionMode).FullName}.{executionMode}"));
+				new CodeSnippetExpression($"{typeof(ExecutionMode).FullName}.{executionMode}"));
 			constructor.Statements.Add(
 				constructor.Statements.Count == 0
 					? new CodeVariableDeclarationStatement(typeof(Microsoft.BizTalk.PipelineOM.Stage), VARIABLE_NAME, invokeExpression)
@@ -57,8 +60,8 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.CodeDom
 				typeof(IBaseComponent),
 				variableName,
 				new CodeMethodInvokeExpression(
-					new CodeTypeReferenceExpression(typeof(Microsoft.BizTalk.PipelineOM.PipelineManager)),
-					nameof(Microsoft.BizTalk.PipelineOM.PipelineManager.CreateComponent),
+					new CodeTypeReferenceExpression(typeof(PipelineManager)),
+					nameof(PipelineManager.CreateComponent),
 					new CodeSnippetExpression($"\"{component.AssemblyQualifiedName}\"")));
 			constructor.Statements.Add(declarationStatement);
 			return declarationStatement;
@@ -92,7 +95,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.CodeDom
 												pc => new CodeObjectCreateExpression(
 													typeof(PropertyContents),
 													new CodePrimitiveExpression(pc.Name),
-													new CodePrimitiveExpression(pc.Value)))
+													pc.Value.ToPrimitiveType()))
 											.ToArray()
 									))),
 							new CodePrimitiveExpression(0)))));
@@ -107,6 +110,13 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.CodeDom
 						nameof(Microsoft.BizTalk.PipelineOM.Pipeline.AddComponent),
 						new CodeVariableReferenceExpression(VARIABLE_NAME),
 						new CodeVariableReferenceExpression(componentDeclaration.Name))));
+		}
+
+		private static CodeExpression ToPrimitiveType(this object value)
+		{
+			return value.GetType().IsEnum
+				? (CodeExpression) new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(value.GetType()), value.ToString())
+				: new CodePrimitiveExpression(value);
 		}
 
 		private const string VARIABLE_NAME = "stage";

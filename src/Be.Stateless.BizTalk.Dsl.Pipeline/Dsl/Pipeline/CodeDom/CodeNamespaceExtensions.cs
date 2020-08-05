@@ -24,27 +24,13 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.CodeDom
 {
 	internal static class CodeNamespaceExtensions
 	{
-		internal static void ImportNamespace<T>(this CodeNamespace @namespace)
-		{
-			if (@namespace == null) throw new ArgumentNullException(nameof(@namespace));
-			@namespace.ImportNamespace(typeof(T));
-		}
-
-		internal static void ImportNamespace(this CodeNamespace @namespace, Type type)
-		{
-			if (@namespace == null) throw new ArgumentNullException(nameof(@namespace));
-			if (type == null) throw new ArgumentNullException(nameof(type));
-			@namespace.Imports.Add(new CodeNamespaceImport(type.Namespace));
-		}
-
 		internal static CodeTypeDeclaration AddPipelineClass<T>(this CodeNamespace @namespace, Pipeline<T> pipeline) where T : IPipelineStageList
 		{
 			if (@namespace == null) throw new ArgumentNullException(nameof(@namespace));
 			if (pipeline == null) throw new ArgumentNullException(nameof(pipeline));
 			var @class = new CodeTypeDeclaration {
 				IsClass = true,
-				// TODO ?? TypeAttributes.Serializable ??
-				TypeAttributes = TypeAttributes.Public | TypeAttributes.Sealed | TypeAttributes.Serializable,
+				TypeAttributes = TypeAttributes.Public | TypeAttributes.Sealed,
 				Name = pipeline.GetType().Name,
 				BaseTypes = {
 					new CodeTypeReference(

@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Dsl\Pipeline\Resources\XmlMicroPipeline.btp.cs" />
     <Compile Remove="Dsl\Pipeline\Resources\XmlRegularPipeline.btp.cs" />
   </ItemGroup>
 
@@ -19,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Dsl\Pipeline\Resources\XmlMicroPipeline.btp.cs" />
     <EmbeddedResource Include="Dsl\Pipeline\Resources\XmlMicroPipelineDesignerDocument.xml" />
     <EmbeddedResource Include="Dsl\Pipeline\Resources\XmlMicroPipelineRuntimeDocument.xml" />
     <EmbeddedResource Include="Dsl\Pipeline\Resources\XmlRegularPipeline.btp.cs" />
@@ -28,7 +30,7 @@
 
   <ItemGroup>
     <PackageReference Include="Be.Stateless.BizTalk.Messaging.Unit" Version="2.0.20214.59077" />
-    <PackageReference Include="Be.Stateless.BizTalk.Pipeline.Components" Version="2.0.20215.27656" />
+    <PackageReference Include="Be.Stateless.BizTalk.Pipeline.Components" Version="2.0.20218.51227" />
     <PackageReference Include="BizTalk.Server.2020.Runtime" Version="1.0.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

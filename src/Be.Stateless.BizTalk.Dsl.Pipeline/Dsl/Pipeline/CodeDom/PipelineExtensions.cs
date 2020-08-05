@@ -40,13 +40,6 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.CodeDom
 
 			//see Microsoft.BizTalk.PipelineEditor.PipelineCompiler::GenerateCompilerOutput, Microsoft.BizTalk.PipelineOM, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
 			var @namespace = new CodeNamespace(pipeline.GetType().Namespace);
-			//// ReSharper disable RedundantNameQualifier
-			//@namespace.ImportNamespace<System.Action>();
-			//@namespace.ImportNamespace<System.Collections.Generic.KeyNotFoundException>();
-			//@namespace.ImportNamespace<Microsoft.BizTalk.Component.XmlAsmComp>();
-			//@namespace.ImportNamespace<Microsoft.BizTalk.Component.Interop.IPersistPropertyBag>();
-			//@namespace.ImportNamespace<Microsoft.BizTalk.PipelineOM.Pipeline>();
-			//// ReSharper restore RedundantNameQualifier
 			var @class = @namespace.AddPipelineClass(pipeline);
 			@class.AddConstructor(pipeline.Stages);
 			@class.AddXmlContentProperty(pipeline.GetPipelineRuntimeDocumentSerializer().Serialize());

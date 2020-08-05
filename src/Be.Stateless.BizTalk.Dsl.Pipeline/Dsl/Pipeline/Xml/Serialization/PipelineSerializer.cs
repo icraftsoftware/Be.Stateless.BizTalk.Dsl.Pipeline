@@ -35,14 +35,10 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.Xml.Serialization
 
 		public string Serialize()
 		{
-			var pipelineDocument = CreatePipelineFileDocument();
 			using (var writer = new StringWriter())
 			using (var xmlTextWriter = new XmlTextWriter(writer))
 			{
-				xmlTextWriter.Formatting = Formatting.Indented;
-				xmlTextWriter.QuoteChar = QuoteChar;
-				var xmlSerializer = CreateXmlSerializer();
-				xmlSerializer.Serialize(xmlTextWriter, pipelineDocument);
+				Serialize(xmlTextWriter);
 				return writer.ToString();
 			}
 		}
@@ -57,13 +53,9 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.Xml.Serialization
 
 		public void Write(Stream stream)
 		{
-			var pipelineDocument = CreatePipelineFileDocument();
 			using (var xmlTextWriter = new XmlTextWriter(stream, Encoding.Unicode))
 			{
-				xmlTextWriter.Formatting = Formatting.Indented;
-				xmlTextWriter.QuoteChar = QuoteChar;
-				var xmlSerializer = CreateXmlSerializer();
-				xmlSerializer.Serialize(xmlTextWriter, pipelineDocument);
+				Serialize(xmlTextWriter);
 			}
 		}
 
@@ -71,7 +63,14 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.Xml.Serialization
 
 		protected IVisitable<IPipelineVisitor> Pipeline { get; }
 
-		protected char QuoteChar { get; set; } = '"';
+		private void Serialize(XmlTextWriter xmlTextWriter)
+		{
+			var pipelineDocument = CreatePipelineFileDocument();
+			xmlTextWriter.Formatting = Formatting.Indented;
+			xmlTextWriter.QuoteChar = '\'';
+			var xmlSerializer = CreateXmlSerializer();
+			xmlSerializer.Serialize(xmlTextWriter, pipelineDocument);
+		}
 
 		protected abstract XmlSerializer CreateXmlSerializer();
 
