@@ -22,6 +22,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Be.Stateless.Extensions;
 using Microsoft.BizTalk.Component.Interop;
 using Microsoft.BizTalk.PipelineEditor.PolicyFile;
 using Microsoft.BizTalk.PipelineOM;
@@ -114,7 +115,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.CodeDom
 
 		private static CodeExpression ToPrimitiveType(this object value)
 		{
-			return value.GetType().IsEnum
+			return value.IfNotNull(v => v.GetType().IsEnum)
 				? (CodeExpression) new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(value.GetType()), value.ToString())
 				: new CodePrimitiveExpression(value);
 		}
