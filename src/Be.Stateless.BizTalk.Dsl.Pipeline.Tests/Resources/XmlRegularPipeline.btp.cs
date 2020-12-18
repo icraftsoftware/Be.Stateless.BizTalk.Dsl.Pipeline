@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Be.Stateless.BizTalk.Dsl.Pipeline.Dummies
+namespace Be.Stateless.BizTalk.Dummies
 {
 	
 	
@@ -17,7 +17,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.Dummies
 		
 		public XmlRegularPipeline()
 		{
-			Microsoft.BizTalk.PipelineOM.Stage stage = this.AddStage(new System.Guid("9d0e4103-4cce-4536-83fa-4a5040674ad6"), Microsoft.BizTalk.PipelineOM.ExecutionMode.all);
+			Microsoft.BizTalk.PipelineOM.Stage stage = this.AddStage(Microsoft.BizTalk.PipelineOM.Stage.Decoder, Microsoft.BizTalk.PipelineOM.ExecutionMode.all);
 			Microsoft.BizTalk.Component.Interop.IBaseComponent comp0 = Microsoft.BizTalk.PipelineOM.PipelineManager.CreateComponent("Be.Stateless.BizTalk.Component.FailedMessageRoutingEnablerComponent, Be.Stateless.BizTalk.Pipeline.Components, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3707daa0b119fc14");
 			if (comp0.GetType().IsInstanceOfType(typeof(Microsoft.BizTalk.Component.Interop.IPersistPropertyBag)))
 			{
@@ -27,7 +27,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.Dummies
 									new Microsoft.BizTalk.PipelineEditor.PropertyContents("SuppressRoutingFailureReport", false)})), 0);
 			}
 			this.AddComponent(stage, comp0);
-			stage = this.AddStage(new System.Guid("9d0e4105-4cce-4536-83fa-4a5040674ad6"), Microsoft.BizTalk.PipelineOM.ExecutionMode.firstRecognized);
+			stage = this.AddStage(Microsoft.BizTalk.PipelineOM.Stage.DisassemblingParser, Microsoft.BizTalk.PipelineOM.ExecutionMode.firstRecognized);
 			Microsoft.BizTalk.Component.Interop.IBaseComponent comp1 = Microsoft.BizTalk.PipelineOM.PipelineManager.CreateComponent("Microsoft.BizTalk.Component.XmlDasmComp, Microsoft.BizTalk.Pipeline.Components, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35");
 			if (comp1.GetType().IsInstanceOfType(typeof(Microsoft.BizTalk.Component.Interop.IPersistPropertyBag)))
 			{

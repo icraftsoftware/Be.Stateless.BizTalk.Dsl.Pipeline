@@ -17,8 +17,9 @@
 #endregion
 
 using System;
+using Be.Stateless.BizTalk.Dsl.Pipeline;
 
-namespace Be.Stateless.BizTalk.Dsl.Pipeline.Dummies
+namespace Be.Stateless.BizTalk.Dummies
 {
 	internal class SendPipelineImpl : SendPipeline
 	{

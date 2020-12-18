@@ -47,7 +47,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.CodeDom
 			var invokeExpression = new CodeMethodInvokeExpression(
 				new CodeThisReferenceExpression(),
 				nameof(Microsoft.BizTalk.PipelineOM.Pipeline.AddStage),
-				new CodeObjectCreateExpression(typeof(Guid), new CodePrimitiveExpression(stage.Category.Id.ToString())),
+				new CodeSnippetExpression($"{typeof(Microsoft.BizTalk.PipelineOM.Stage).FullName}.{stage.Category.Name}"),
 				new CodeSnippetExpression($"{typeof(ExecutionMode).FullName}.{executionMode}"));
 			constructor.Statements.Add(
 				constructor.Statements.Count == 0

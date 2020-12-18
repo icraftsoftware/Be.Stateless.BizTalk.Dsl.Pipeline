@@ -26,6 +26,7 @@ using Be.Stateless.Extensions;
 using Be.Stateless.Reflection;
 using Be.Stateless.Resources;
 using Be.Stateless.Xml;
+using Be.Stateless.Xml.Serialization;
 using Microsoft.BizTalk.PipelineEditor.PolicyFile;
 using Microsoft.Win32;
 
@@ -79,7 +80,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.Extensions
 			using (var stream = ResourceManager.Load(Assembly.GetExecutingAssembly(), $"{typeof(IStage).Namespace}.Resources.{name}"))
 			using (var xmlReader = XmlReader.Create(stream, ValidatingXmlReaderSettings.Create(XmlSchemaContentProcessing.Strict, xmlSchemas.ToArray())))
 			{
-				var xmlSerializer = new XmlSerializer(typeof(Document));
+				var xmlSerializer = CachingXmlSerializerFactory.Create(typeof(Document));
 				return (Document) xmlSerializer.Deserialize(xmlReader);
 			}
 		}

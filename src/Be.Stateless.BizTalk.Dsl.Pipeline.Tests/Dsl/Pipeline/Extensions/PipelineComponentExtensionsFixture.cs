@@ -19,11 +19,11 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Be.Stateless.BizTalk.Component;
-using Be.Stateless.BizTalk.Dsl.Pipeline.Dummies;
+using Be.Stateless.BizTalk.Dummies;
 using FluentAssertions;
 using Moq;
 using Xunit;
-using static Be.Stateless.DelegateFactory;
+using static Be.Stateless.Unit.DelegateFactory;
 
 namespace Be.Stateless.BizTalk.Dsl.Pipeline.Extensions
 {

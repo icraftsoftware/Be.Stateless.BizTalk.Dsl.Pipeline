@@ -65,15 +65,15 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.Xml.Serialization
 
 		private void Serialize(XmlTextWriter xmlTextWriter)
 		{
-			var pipelineDocument = CreatePipelineFileDocument();
+			var pipelineDocument = CreatePipelineDocument();
 			xmlTextWriter.Formatting = Formatting.Indented;
 			xmlTextWriter.QuoteChar = '\'';
 			var xmlSerializer = CreateXmlSerializer();
 			xmlSerializer.Serialize(xmlTextWriter, pipelineDocument);
 		}
 
-		protected abstract XmlSerializer CreateXmlSerializer();
+		protected abstract Document CreatePipelineDocument();
 
-		protected abstract Document CreatePipelineFileDocument();
+		protected abstract XmlSerializer CreateXmlSerializer();
 	}
 }

@@ -21,7 +21,7 @@ using Be.Stateless.BizTalk.Component;
 using FluentAssertions;
 using Microsoft.BizTalk.Component;
 using Xunit;
-using static Be.Stateless.DelegateFactory;
+using static Be.Stateless.Unit.DelegateFactory;
 
 namespace Be.Stateless.BizTalk.Dsl.Pipeline
 {

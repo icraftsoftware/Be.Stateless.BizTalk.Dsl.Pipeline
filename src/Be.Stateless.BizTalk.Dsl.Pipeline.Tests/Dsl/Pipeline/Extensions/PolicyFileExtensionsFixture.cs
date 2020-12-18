@@ -17,7 +17,7 @@
 #endregion
 
 using System.IO;
-using Be.Stateless.BizTalk.Dsl.Pipeline.Dummies;
+using Be.Stateless.BizTalk.Dummies;
 using Be.Stateless.Extensions;
 using FluentAssertions;
 using Microsoft.BizTalk.PipelineEditor.PolicyFile;
@@ -39,18 +39,6 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.Extensions
 			new SendPipelineImpl().GetPolicyFileName().Should().Be("BTSTransmitPolicy.xml");
 		}
 
-		[Fact]
-		public void LoadReceivePolicyResourceDocument()
-		{
-			PolicyFileExtensions.LoadPolicyResourceDocument("BTSReceivePolicy.xml").Should().BeOfType<Document>().And.NotBeNull();
-		}
-
-		[Fact]
-		public void LoadTransmitPolicyResourceDocument()
-		{
-			PolicyFileExtensions.LoadPolicyResourceDocument("BTSTransmitPolicy.xml").Should().BeOfType<Document>().And.NotBeNull();
-		}
-
 		[SkippableFact]
 		public void LoadReceivePolicyFileDocument()
 		{
@@ -58,11 +46,23 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.Extensions
 			PolicyFileExtensions.LoadPolicyFileDocument("BTSReceivePolicy.xml").Should().BeOfType<Document>().And.NotBeNull();
 		}
 
+		[Fact]
+		public void LoadReceivePolicyResourceDocument()
+		{
+			PolicyFileExtensions.LoadPolicyResourceDocument("BTSReceivePolicy.xml").Should().BeOfType<Document>().And.NotBeNull();
+		}
+
 		[SkippableFact]
 		public void LoadTransmitPolicyFileDocument()
 		{
 			Skip.IfNot(PolicyFileExtensions.DeveloperToolsPath.IfNotNullOrEmpty(Directory.Exists), "BizTalk Server is not installed.");
 			PolicyFileExtensions.LoadPolicyFileDocument("BTSTransmitPolicy.xml").Should().BeOfType<Document>().And.NotBeNull();
+		}
+
+		[Fact]
+		public void LoadTransmitPolicyResourceDocument()
+		{
+			PolicyFileExtensions.LoadPolicyResourceDocument("BTSTransmitPolicy.xml").Should().BeOfType<Document>().And.NotBeNull();
 		}
 	}
 }

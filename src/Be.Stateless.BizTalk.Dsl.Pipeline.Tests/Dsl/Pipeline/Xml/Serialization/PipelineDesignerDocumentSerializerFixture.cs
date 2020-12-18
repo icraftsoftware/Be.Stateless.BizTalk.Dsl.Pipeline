@@ -18,7 +18,7 @@
 
 using System.Reflection;
 using System.Xml.Linq;
-using Be.Stateless.BizTalk.Dsl.Pipeline.Dummies;
+using Be.Stateless.BizTalk.Dummies;
 using Be.Stateless.Resources;
 using FluentAssertions;
 using Xunit;
@@ -34,7 +34,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.Xml.Serialization
 			XDocument.Parse(pipelineDocument.Serialize()).Should().BeEquivalentTo(
 				ResourceManager.Load(
 					Assembly.GetExecutingAssembly(),
-					"Be.Stateless.BizTalk.Dsl.Pipeline.Resources.XmlMicroPipelineDesignerDocument.xml",
+					"Be.Stateless.BizTalk.Resources.XmlMicroPipelineDesignerDocument.xml",
 					XDocument.Load));
 		}
 
@@ -45,7 +45,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.Xml.Serialization
 			XDocument.Parse(pipelineDocument.Serialize()).Should().BeEquivalentTo(
 				ResourceManager.Load(
 					Assembly.GetExecutingAssembly(),
-					"Be.Stateless.BizTalk.Dsl.Pipeline.Resources.XmlRegularPipelineDesignerDocument.xml",
+					"Be.Stateless.BizTalk.Resources.XmlRegularPipelineDesignerDocument.xml",
 					XDocument.Load));
 		}
 	}

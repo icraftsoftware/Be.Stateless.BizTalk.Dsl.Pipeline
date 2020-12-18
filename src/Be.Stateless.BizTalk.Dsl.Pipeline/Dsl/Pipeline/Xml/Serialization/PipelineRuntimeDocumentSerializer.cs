@@ -17,6 +17,7 @@
 #endregion
 
 using System.Xml.Serialization;
+using Be.Stateless.Xml.Serialization;
 using Be.Stateless.Xml.Serialization.Extensions;
 using Microsoft.BizTalk.PipelineEditor.PipelineFile;
 using PolicyFileStage = Microsoft.BizTalk.PipelineEditor.PipelineFile.Stage;
@@ -29,7 +30,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.Xml.Serialization
 
 		#region Base Class Member Overrides
 
-		protected override Document CreatePipelineFileDocument()
+		protected override Document CreatePipelineDocument()
 		{
 			var visitor = new PipelineRuntimeDocumentBuilderVisitor();
 			Pipeline.Accept(visitor);
@@ -46,7 +47,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.Xml.Serialization
 			overrides.Add<PolicyFileStage>(
 				s => s.PolicyFileStage,
 				new XmlAttributes { XmlElements = { new XmlElementAttribute(nameof(PolicyFileStage.PolicyFileStage), typeof(Microsoft.BizTalk.PipelineEditor.PolicyFile.Stage)) } });
-			return new XmlSerializer(typeof(Document), overrides);
+			return CachingXmlSerializerFactory.Create(typeof(Document), overrides);
 		}
 
 		#endregion

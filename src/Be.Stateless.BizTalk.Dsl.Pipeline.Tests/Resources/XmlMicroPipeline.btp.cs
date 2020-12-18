@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Be.Stateless.BizTalk.Dsl.Pipeline.Dummies
+namespace Be.Stateless.BizTalk.Dummies
 {
 	
 	
@@ -17,7 +17,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.Dummies
 		
 		public XmlMicroPipeline()
 		{
-			Microsoft.BizTalk.PipelineOM.Stage stage = this.AddStage(new System.Guid("9d0e4101-4cce-4536-83fa-4a5040674ad6"), Microsoft.BizTalk.PipelineOM.ExecutionMode.all);
+			Microsoft.BizTalk.PipelineOM.Stage stage = this.AddStage(Microsoft.BizTalk.PipelineOM.Stage.Any, Microsoft.BizTalk.PipelineOM.ExecutionMode.all);
 			Microsoft.BizTalk.Component.Interop.IBaseComponent comp0 = Microsoft.BizTalk.PipelineOM.PipelineManager.CreateComponent("Be.Stateless.BizTalk.Component.FailedMessageRoutingEnablerComponent, Be.Stateless.BizTalk.Pipeline.Components, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3707daa0b119fc14");
 			if (comp0.GetType().IsInstanceOfType(typeof(Microsoft.BizTalk.Component.Interop.IPersistPropertyBag)))
 			{
@@ -32,10 +32,10 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.Dummies
 			{
 				((Microsoft.BizTalk.Component.Interop.IPersistPropertyBag)(comp1)).Load(new Microsoft.BizTalk.PipelineEditor.PropertyBag(new System.Collections.ArrayList(new Microsoft.BizTalk.PipelineEditor.PropertyContents[] {
 									new Microsoft.BizTalk.PipelineEditor.PropertyContents("Enabled", true),
-									new Microsoft.BizTalk.PipelineEditor.PropertyContents("Components", @"<mComponents><mComponent name='Be.Stateless.BizTalk.MicroComponent.ContextPropertyExtractor, Be.Stateless.BizTalk.Pipeline.Components, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3707daa0b119fc14'><Extractors><s0:Properties xmlns:s0='urn:schemas.stateless.be:biztalk:annotations:2013:01' xmlns:s1='urn:schemas.stateless.be:biztalk:properties:system:2012:04'><s1:SenderName mode='promote' xpath='/letter/*/from' /><s1:EnvironmentTag xpath='/letter/*/paragraph' /></s0:Properties></Extractors></mComponent></mComponents>")})), 0);
+									new Microsoft.BizTalk.PipelineEditor.PropertyContents("Components", @"<mComponents><mComponent name='Be.Stateless.BizTalk.MicroComponent.ContextPropertyExtractor, Be.Stateless.BizTalk.Pipeline.MicroComponents, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3707daa0b119fc14'><Extractors><s0:Properties xmlns:s0='urn:schemas.stateless.be:biztalk:annotations:2013:01' xmlns:s1='urn:schemas.stateless.be:biztalk:properties:system:2012:04'><s1:SenderName mode='promote' xpath='/letter/*/from' /><s1:EnvironmentTag xpath='/letter/*/paragraph' /></s0:Properties></Extractors></mComponent></mComponents>")})), 0);
 			}
 			this.AddComponent(stage, comp1);
-			stage = this.AddStage(new System.Guid("9d0e4107-4cce-4536-83fa-4a5040674ad6"), Microsoft.BizTalk.PipelineOM.ExecutionMode.all);
+			stage = this.AddStage(Microsoft.BizTalk.PipelineOM.Stage.AssemblingSerializer, Microsoft.BizTalk.PipelineOM.ExecutionMode.all);
 			Microsoft.BizTalk.Component.Interop.IBaseComponent comp2 = Microsoft.BizTalk.PipelineOM.PipelineManager.CreateComponent("Microsoft.BizTalk.Component.XmlAsmComp, Microsoft.BizTalk.Pipeline.Components, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35");
 			if (comp2.GetType().IsInstanceOfType(typeof(Microsoft.BizTalk.Component.Interop.IPersistPropertyBag)))
 			{
@@ -54,7 +54,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.Dummies
 									new Microsoft.BizTalk.PipelineEditor.PropertyContents("HiddenProperties", "EnvelopeSpecTargetNamespaces,DocumentSpecTargetNamespaces,TargetCodePage")})), 0);
 			}
 			this.AddComponent(stage, comp2);
-			stage = this.AddStage(new System.Guid("9d0e4108-4cce-4536-83fa-4a5040674ad6"), Microsoft.BizTalk.PipelineOM.ExecutionMode.all);
+			stage = this.AddStage(Microsoft.BizTalk.PipelineOM.Stage.Encoder, Microsoft.BizTalk.PipelineOM.ExecutionMode.all);
 			Microsoft.BizTalk.Component.Interop.IBaseComponent comp3 = Microsoft.BizTalk.PipelineOM.PipelineManager.CreateComponent("Be.Stateless.BizTalk.Component.MicroPipelineComponent, Be.Stateless.BizTalk.Pipeline.Components, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3707daa0b119fc14");
 			if (comp3.GetType().IsInstanceOfType(typeof(Microsoft.BizTalk.Component.Interop.IPersistPropertyBag)))
 			{

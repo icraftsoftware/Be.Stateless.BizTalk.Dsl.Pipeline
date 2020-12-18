@@ -19,8 +19,8 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Be.Stateless.BizTalk.Component;
-using Be.Stateless.BizTalk.Dsl.Pipeline.Dummies;
 using Be.Stateless.BizTalk.Dsl.Pipeline.Extensions;
+using Be.Stateless.BizTalk.Dummies;
 using FluentAssertions;
 using Microsoft.BizTalk.PipelineEditor;
 using Microsoft.BizTalk.PipelineEditor.PipelineFile;

@@ -17,15 +17,25 @@
 #endregion
 
 using System;
+using Be.Stateless.BizTalk.Component;
+using Be.Stateless.BizTalk.Dsl.Pipeline;
+using Microsoft.BizTalk.Component;
 
-namespace Be.Stateless.BizTalk.Dsl.Pipeline.Dummies
+namespace Be.Stateless.BizTalk.Dummies
 {
-	internal class ReceivePipelineImpl : ReceivePipeline
+	internal class XmlRegularPipeline : ReceivePipeline
 	{
-		public ReceivePipelineImpl()
+		public XmlRegularPipeline()
 		{
-			Description = "A receive pipeline.";
-			Version = new Version(5, 6);
+			Description = "XML receive regular pipeline.";
+			Version = new Version(1, 0);
+			Stages.Decode
+				.AddComponent(
+					new FailedMessageRoutingEnablerComponent {
+						SuppressRoutingFailureReport = false
+					});
+			Stages.Disassemble
+				.AddComponent(new XmlDasmComp());
 		}
 	}
 }

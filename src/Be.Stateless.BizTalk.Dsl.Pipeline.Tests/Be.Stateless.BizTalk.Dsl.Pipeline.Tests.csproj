@@ -8,30 +8,36 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Dsl\Pipeline\Resources\XmlMicroPipeline.btp.cs" />
-    <Compile Remove="Dsl\Pipeline\Resources\XmlRegularPipeline.btp.cs" />
+    <None Include="..\..\.settings\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Dsl\Pipeline\Resources\XmlMicroPipelineDesignerDocument.xml" />
-    <None Remove="Dsl\Pipeline\Resources\XmlMicroPipelineRuntimeDocument.xml" />
-    <None Remove="Dsl\Pipeline\Resources\XmlRegularPipelineDesignerDocument.xml" />
-    <None Remove="Dsl\Pipeline\Resources\XmlRegularPipelineRuntimeDocument.xml" />
+    <Compile Remove="Resources\XmlMicroPipeline.btp.cs" />
+    <Compile Remove="Resources\XmlRegularPipeline.btp.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Dsl\Pipeline\Resources\XmlMicroPipeline.btp.cs" />
-    <EmbeddedResource Include="Dsl\Pipeline\Resources\XmlMicroPipelineDesignerDocument.xml" />
-    <EmbeddedResource Include="Dsl\Pipeline\Resources\XmlMicroPipelineRuntimeDocument.xml" />
-    <EmbeddedResource Include="Dsl\Pipeline\Resources\XmlRegularPipeline.btp.cs" />
-    <EmbeddedResource Include="Dsl\Pipeline\Resources\XmlRegularPipelineDesignerDocument.xml" />
-    <EmbeddedResource Include="Dsl\Pipeline\Resources\XmlRegularPipelineRuntimeDocument.xml" />
+    <None Remove="Resources\XmlMicroPipelineDesignerDocument.xml" />
+    <None Remove="Resources\XmlMicroPipelineRuntimeDocument.xml" />
+    <None Remove="Resources\XmlRegularPipelineDesignerDocument.xml" />
+    <None Remove="Resources\XmlRegularPipelineRuntimeDocument.xml" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Be.Stateless.BizTalk.Messaging.Unit" Version="2.0.20224.39655" />
-    <PackageReference Include="Be.Stateless.BizTalk.Pipeline.Components" Version="2.0.20225.25392" />
-    <PackageReference Include="BizTalk.Server.2020.Runtime" Version="1.0.3">
+    <EmbeddedResource Include="Resources\XmlMicroPipeline.btp.cs" />
+    <EmbeddedResource Include="Resources\XmlMicroPipelineDesignerDocument.xml" />
+    <EmbeddedResource Include="Resources\XmlMicroPipelineRuntimeDocument.xml" />
+    <EmbeddedResource Include="Resources\XmlRegularPipeline.btp.cs" />
+    <EmbeddedResource Include="Resources\XmlRegularPipelineDesignerDocument.xml" />
+    <EmbeddedResource Include="Resources\XmlRegularPipelineRuntimeDocument.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Be.Stateless.BizTalk.Messaging.Unit" Version="2.0.20338.38034" />
+    <PackageReference Include="Be.Stateless.BizTalk.Pipeline.Components" Version="2.0.20338.38346" />
+    <PackageReference Include="Be.Stateless.BizTalk.Pipeline.MicroComponents" Version="2.0.20338.38298" />
+    <PackageReference Include="Be.Stateless.Common.Unit" Version="2.0.20338.28706" />
+    <PackageReference Include="BizTalk.Server.2020.Runtime" Version="1.0.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -40,8 +46,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="FluentAssertions" Version="5.10.3" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.0" />
-    <PackageReference Include="Moq" Version="4.13.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3" />
+    <PackageReference Include="Moq" Version="4.15.2" />
     <PackageReference Include="xunit.core" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
       <PrivateAssets>all</PrivateAssets>

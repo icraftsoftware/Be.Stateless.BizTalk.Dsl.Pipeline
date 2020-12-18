@@ -27,7 +27,7 @@ using Moq;
 using Xunit;
 using PipelinePolicy = Microsoft.BizTalk.PipelineEditor.PolicyFile.Document;
 using StagePolicy = Microsoft.BizTalk.PipelineEditor.PolicyFile.Stage;
-using static Be.Stateless.DelegateFactory;
+using static Be.Stateless.Unit.DelegateFactory;
 
 namespace Be.Stateless.BizTalk.Dsl.Pipeline
 {

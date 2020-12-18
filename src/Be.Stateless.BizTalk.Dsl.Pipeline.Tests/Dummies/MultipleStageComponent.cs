@@ -21,10 +21,12 @@ using Be.Stateless.BizTalk.Component;
 using Microsoft.BizTalk.Component.Interop;
 using Microsoft.BizTalk.Message.Interop;
 
-namespace Be.Stateless.BizTalk.Dsl.Pipeline.Dummies
+namespace Be.Stateless.BizTalk.Dummies
 {
 	[ComponentCategory(CategoryTypes.CATID_PipelineComponent)]
-	internal class NoStageComponent : PipelineComponent
+	[ComponentCategory(CategoryTypes.CATID_Decoder)]
+	[ComponentCategory(CategoryTypes.CATID_PartyResolver)]
+	internal class MultipleStageComponent : PipelineComponent
 	{
 		#region Base Class Member Overrides
 

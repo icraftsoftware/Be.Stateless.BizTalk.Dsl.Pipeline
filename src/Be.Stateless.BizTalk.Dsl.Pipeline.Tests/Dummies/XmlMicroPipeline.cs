@@ -20,11 +20,12 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Be.Stateless.BizTalk.Component;
 using Be.Stateless.BizTalk.ContextProperties;
+using Be.Stateless.BizTalk.Dsl.Pipeline;
 using Be.Stateless.BizTalk.MicroComponent;
 using Be.Stateless.BizTalk.Schema.Annotation;
 using Microsoft.BizTalk.Component;
 
-namespace Be.Stateless.BizTalk.Dsl.Pipeline.Dummies
+namespace Be.Stateless.BizTalk.Dummies
 {
 	internal class XmlMicroPipeline : SendPipeline
 	{

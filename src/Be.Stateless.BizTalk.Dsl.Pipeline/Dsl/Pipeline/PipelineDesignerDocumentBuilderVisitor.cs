@@ -16,7 +16,6 @@
 
 #endregion
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using Be.Stateless.BizTalk.Dsl.Pipeline.Extensions;
 using Be.Stateless.Linq.Extensions;
@@ -25,36 +24,12 @@ using StageDocument = Microsoft.BizTalk.PipelineEditor.PipelineFile.Stage;
 
 namespace Be.Stateless.BizTalk.Dsl.Pipeline
 {
-	public class PipelineDesignerDocumentBuilderVisitor : IPipelineVisitor
+	public class PipelineDesignerDocumentBuilderVisitor : PipelineVisitor
 	{
-		#region IPipelineVisitor Members
-
-		public void VisitPipeline<T>(Pipeline<T> pipeline) where T : IPipelineStageList
-		{
-			if (pipeline == null) throw new ArgumentNullException(nameof(pipeline));
-			Document = CreatePipelineDocument(pipeline);
-		}
-
-		public void VisitStage(IStage stage)
-		{
-			if (stage == null) throw new ArgumentNullException(nameof(stage));
-			_stageDocument = CreateStageDocument(stage);
-			Document.Stages.Add(_stageDocument);
-		}
-
-		public void VisitComponent(IPipelineComponentDescriptor componentDescriptor)
-		{
-			if (componentDescriptor == null) throw new ArgumentNullException(nameof(componentDescriptor));
-			var componentInfo = CreateComponentInfo(componentDescriptor);
-			_stageDocument.Components.Add(componentInfo);
-		}
-
-		#endregion
-
-		public Document Document { get; private set; }
+		#region Base Class Member Overrides
 
 		[SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "Done by corresponding Visit method.")]
-		protected virtual ComponentInfo CreateComponentInfo(IPipelineComponentDescriptor componentDescriptor)
+		protected override ComponentInfo CreateComponentInfo(IPipelineComponentDescriptor componentDescriptor)
 		{
 			var componentInfo = new ComponentInfo {
 				QualifiedNameOrClassId = componentDescriptor.FullName,
@@ -69,7 +44,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 		}
 
 		[SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "Done by corresponding Visit method.")]
-		protected virtual Document CreatePipelineDocument<T>(Pipeline<T> pipeline) where T : IPipelineStageList
+		protected override Document CreatePipelineDocument<T>(Pipeline<T> pipeline)
 		{
 			return new Document {
 				PolicyFilePath = pipeline.GetPolicyFileName(),
@@ -80,11 +55,11 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 		}
 
 		[SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "Done by corresponding Visit method.")]
-		protected virtual StageDocument CreateStageDocument(IStage stage)
+		protected override StageDocument CreateStageDocument(IStage stage)
 		{
 			return new StageDocument { CategoryId = stage.Category.Id };
 		}
 
-		private StageDocument _stageDocument;
+		#endregion
 	}
 }

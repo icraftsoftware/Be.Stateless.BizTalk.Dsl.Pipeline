@@ -26,6 +26,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.Interpreters
 	public class ReceivePipelineInterpreter<T> : Microsoft.BizTalk.PipelineOM.ReceivePipeline
 		where T : ReceivePipeline, new()
 	{
+		[SuppressMessage("Performance", "CA1810:Initialize reference type static fields inline")]
 		static ReceivePipelineInterpreter()
 		{
 			_pipelineDefinition = new T();

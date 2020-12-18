@@ -27,14 +27,14 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.CodeDom
 	public static class PipelineExtensions
 	{
 		[SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "Public DSL API.")]
-		public static CodeCompileUnit ConvertToCodeCompileUnit(this Type pipelineType)
+		public static CodeCompileUnit ConvertToPipelineRuntimeCodeCompileUnit(this Type pipelineType)
 		{
-			return pipelineType.AsReceivePipeline()?.ConvertToCodeCompileUnit()
-				?? pipelineType.AsSendPipeline()?.ConvertToCodeCompileUnit()
+			return pipelineType.AsReceivePipeline()?.ConvertToPipelineRuntimeCodeCompileUnit()
+				?? pipelineType.AsSendPipeline()?.ConvertToPipelineRuntimeCodeCompileUnit()
 				?? throw new InvalidOperationException("Pipeline instantiation failure.");
 		}
 
-		public static CodeCompileUnit ConvertToCodeCompileUnit<T>(this Pipeline<T> pipeline) where T : IPipelineStageList
+		public static CodeCompileUnit ConvertToPipelineRuntimeCodeCompileUnit<T>(this Pipeline<T> pipeline) where T : IPipelineStageList
 		{
 			if (pipeline == null) throw new ArgumentNullException(nameof(pipeline));
 

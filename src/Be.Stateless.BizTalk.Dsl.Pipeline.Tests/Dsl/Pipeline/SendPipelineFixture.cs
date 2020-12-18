@@ -22,7 +22,7 @@ using Be.Stateless.BizTalk.Dsl.Pipeline.Xml.Serialization;
 using FluentAssertions;
 using Microsoft.BizTalk.Component;
 using Xunit;
-using static Be.Stateless.DelegateFactory;
+using static Be.Stateless.Unit.DelegateFactory;
 
 namespace Be.Stateless.BizTalk.Dsl.Pipeline
 {

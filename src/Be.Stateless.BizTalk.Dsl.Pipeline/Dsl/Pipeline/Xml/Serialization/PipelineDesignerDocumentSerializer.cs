@@ -17,6 +17,7 @@
 #endregion
 
 using System.Xml.Serialization;
+using Be.Stateless.Xml.Serialization;
 using Microsoft.BizTalk.PipelineEditor.PipelineFile;
 
 namespace Be.Stateless.BizTalk.Dsl.Pipeline.Xml.Serialization
@@ -27,7 +28,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.Xml.Serialization
 
 		#region Base Class Member Overrides
 
-		protected override Document CreatePipelineFileDocument()
+		protected override Document CreatePipelineDocument()
 		{
 			var visitor = new PipelineDesignerDocumentBuilderVisitor();
 			Pipeline.Accept(visitor);
@@ -36,7 +37,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.Xml.Serialization
 
 		protected override XmlSerializer CreateXmlSerializer()
 		{
-			return new XmlSerializer(typeof(Document));
+			return CachingXmlSerializerFactory.Create(typeof(Document));
 		}
 
 		#endregion
