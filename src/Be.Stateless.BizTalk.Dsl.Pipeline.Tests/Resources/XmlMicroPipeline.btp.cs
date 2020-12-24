@@ -32,7 +32,7 @@ namespace Be.Stateless.BizTalk.Dummies
 			{
 				((Microsoft.BizTalk.Component.Interop.IPersistPropertyBag)(comp1)).Load(new Microsoft.BizTalk.PipelineEditor.PropertyBag(new System.Collections.ArrayList(new Microsoft.BizTalk.PipelineEditor.PropertyContents[] {
 									new Microsoft.BizTalk.PipelineEditor.PropertyContents("Enabled", true),
-									new Microsoft.BizTalk.PipelineEditor.PropertyContents("Components", @"<mComponents><mComponent name='Be.Stateless.BizTalk.MicroComponent.ContextPropertyExtractor, Be.Stateless.BizTalk.Pipeline.MicroComponents, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3707daa0b119fc14'><Extractors><s0:Properties xmlns:s0='urn:schemas.stateless.be:biztalk:annotations:2013:01' xmlns:s1='urn:schemas.stateless.be:biztalk:properties:system:2012:04'><s1:SenderName mode='promote' xpath='/letter/*/from' /><s1:EnvironmentTag xpath='/letter/*/paragraph' /></s0:Properties></Extractors></mComponent></mComponents>")})), 0);
+									new Microsoft.BizTalk.PipelineEditor.PropertyContents("Components", @"<mComponents><mComponent name='Be.Stateless.BizTalk.MicroComponent.ContextPropertyExtractor, Be.Stateless.BizTalk.Pipeline.MicroComponents, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3707daa0b119fc14'><Extractors><s0:Properties xmlns:s0='urn:schemas.stateless.be:biztalk:annotations:2013:01' xmlns:s1='urn:schemas.stateless.be:biztalk:properties:system:2012:04'><s1:MapTypeName mode='promote' xpath='/letter/*/from' /><s1:MessageType xpath='/letter/*/paragraph' /></s0:Properties></Extractors></mComponent></mComponents>")})), 0);
 			}
 			this.AddComponent(stage, comp1);
 			stage = this.AddStage(Microsoft.BizTalk.PipelineOM.Stage.AssemblingSerializer, Microsoft.BizTalk.PipelineOM.ExecutionMode.all);

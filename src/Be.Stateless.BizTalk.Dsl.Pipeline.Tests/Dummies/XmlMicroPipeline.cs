@@ -45,8 +45,8 @@ namespace Be.Stateless.BizTalk.Dummies
 						Components = new[] {
 							new ContextPropertyExtractor {
 								Extractors = new[] {
-									new XPathExtractor(BizTalkFactoryProperties.SenderName.QName, "/letter/*/from", ExtractionMode.Promote),
-									new XPathExtractor(BizTalkFactoryProperties.EnvironmentTag.QName, "/letter/*/paragraph", ExtractionMode.Write)
+									new XPathExtractor(BizTalkFactoryProperties.MapTypeName.QName, "/letter/*/from", ExtractionMode.Promote),
+									new XPathExtractor(BizTalkFactoryProperties.MessageType.QName, "/letter/*/paragraph", ExtractionMode.Write)
 								}
 							}
 						}
