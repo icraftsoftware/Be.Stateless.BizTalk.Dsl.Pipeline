@@ -21,26 +21,26 @@ namespace Be.Stateless.BizTalk.Dummies
 			Microsoft.BizTalk.Component.Interop.IBaseComponent comp0 = Microsoft.BizTalk.PipelineOM.PipelineManager.CreateComponent("Be.Stateless.BizTalk.Component.FailedMessageRoutingEnablerComponent, Be.Stateless.BizTalk.Pipeline.Components, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3707daa0b119fc14");
 			if (comp0.GetType().IsInstanceOfType(typeof(Microsoft.BizTalk.Component.Interop.IPersistPropertyBag)))
 			{
-				((Microsoft.BizTalk.Component.Interop.IPersistPropertyBag)(comp0)).Load(new Microsoft.BizTalk.PipelineEditor.PropertyBag(new System.Collections.ArrayList(new Microsoft.BizTalk.PipelineEditor.PropertyContents[] {
-									new Microsoft.BizTalk.PipelineEditor.PropertyContents("Enabled", true),
-									new Microsoft.BizTalk.PipelineEditor.PropertyContents("EnableFailedMessageRouting", true),
-									new Microsoft.BizTalk.PipelineEditor.PropertyContents("SuppressRoutingFailureReport", false)})), 0);
+				((Microsoft.BizTalk.Component.Interop.IPersistPropertyBag)(comp0)).Load(new Microsoft.BizTalk.PipelineOM.PropertyBag(new System.Collections.ArrayList(new Microsoft.BizTalk.PipelineOM.PropertyContents[] {
+									new Microsoft.BizTalk.PipelineOM.PropertyContents("Enabled", true),
+									new Microsoft.BizTalk.PipelineOM.PropertyContents("EnableFailedMessageRouting", true),
+									new Microsoft.BizTalk.PipelineOM.PropertyContents("SuppressRoutingFailureReport", false)})), 0);
 			}
 			this.AddComponent(stage, comp0);
 			stage = this.AddStage(Microsoft.BizTalk.PipelineOM.Stage.DisassemblingParser, Microsoft.BizTalk.PipelineOM.ExecutionMode.firstRecognized);
 			Microsoft.BizTalk.Component.Interop.IBaseComponent comp1 = Microsoft.BizTalk.PipelineOM.PipelineManager.CreateComponent("Microsoft.BizTalk.Component.XmlDasmComp, Microsoft.BizTalk.Pipeline.Components, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35");
 			if (comp1.GetType().IsInstanceOfType(typeof(Microsoft.BizTalk.Component.Interop.IPersistPropertyBag)))
 			{
-				((Microsoft.BizTalk.Component.Interop.IPersistPropertyBag)(comp1)).Load(new Microsoft.BizTalk.PipelineEditor.PropertyBag(new System.Collections.ArrayList(new Microsoft.BizTalk.PipelineEditor.PropertyContents[] {
-									new Microsoft.BizTalk.PipelineEditor.PropertyContents("EnvelopeSpecNames", ""),
-									new Microsoft.BizTalk.PipelineEditor.PropertyContents("EnvelopeSpecTargetNamespaces", ""),
-									new Microsoft.BizTalk.PipelineEditor.PropertyContents("DocumentSpecNames", ""),
-									new Microsoft.BizTalk.PipelineEditor.PropertyContents("DocumentSpecTargetNamespaces", ""),
-									new Microsoft.BizTalk.PipelineEditor.PropertyContents("AllowUnrecognizedMessage", false),
-									new Microsoft.BizTalk.PipelineEditor.PropertyContents("ValidateDocument", false),
-									new Microsoft.BizTalk.PipelineEditor.PropertyContents("RecoverableInterchangeProcessing", false),
-									new Microsoft.BizTalk.PipelineEditor.PropertyContents("HiddenProperties", "EnvelopeSpecTargetNamespaces,DocumentSpecTargetNamespaces"),
-									new Microsoft.BizTalk.PipelineEditor.PropertyContents("DtdProcessing", "")})), 0);
+				((Microsoft.BizTalk.Component.Interop.IPersistPropertyBag)(comp1)).Load(new Microsoft.BizTalk.PipelineOM.PropertyBag(new System.Collections.ArrayList(new Microsoft.BizTalk.PipelineOM.PropertyContents[] {
+									new Microsoft.BizTalk.PipelineOM.PropertyContents("EnvelopeSpecNames", ""),
+									new Microsoft.BizTalk.PipelineOM.PropertyContents("EnvelopeSpecTargetNamespaces", ""),
+									new Microsoft.BizTalk.PipelineOM.PropertyContents("DocumentSpecNames", ""),
+									new Microsoft.BizTalk.PipelineOM.PropertyContents("DocumentSpecTargetNamespaces", ""),
+									new Microsoft.BizTalk.PipelineOM.PropertyContents("AllowUnrecognizedMessage", false),
+									new Microsoft.BizTalk.PipelineOM.PropertyContents("ValidateDocument", false),
+									new Microsoft.BizTalk.PipelineOM.PropertyContents("RecoverableInterchangeProcessing", false),
+									new Microsoft.BizTalk.PipelineOM.PropertyContents("HiddenProperties", "EnvelopeSpecTargetNamespaces,DocumentSpecTargetNamespaces"),
+									new Microsoft.BizTalk.PipelineOM.PropertyContents("DtdProcessing", "")})), 0);
 			}
 			this.AddComponent(stage, comp1);
 		}

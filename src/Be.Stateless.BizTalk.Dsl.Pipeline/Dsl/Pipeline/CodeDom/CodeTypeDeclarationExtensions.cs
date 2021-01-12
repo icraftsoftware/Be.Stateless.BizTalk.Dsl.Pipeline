@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2012 - 2020 François Chabot
+// Copyright © 2012 - 2021 François Chabot
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ using System;
 using System.CodeDom;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Microsoft.BizTalk.PipelineOM;
 
 namespace Be.Stateless.BizTalk.Dsl.Pipeline.CodeDom
 {
@@ -37,7 +38,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.CodeDom
 				foreach (var component in (ComponentList) stage.Components)
 				{
 					var componentDeclaration = constructor.DeclareComponent(component, $"comp{compId++}");
-					constructor.ConfigureComponent(componentDeclaration, component.PropertyContents);
+					constructor.ConfigureComponent(componentDeclaration, component.PropertyContents.Select(pc => new PropertyContents(pc.Name, pc.Value)));
 					constructor.AddComponent(componentDeclaration);
 				}
 			}

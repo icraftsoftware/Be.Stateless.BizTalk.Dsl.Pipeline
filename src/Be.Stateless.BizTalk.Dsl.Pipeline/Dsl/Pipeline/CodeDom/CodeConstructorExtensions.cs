@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2012 - 2020 François Chabot
+// Copyright © 2012 - 2021 François Chabot
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -26,8 +26,6 @@ using Be.Stateless.Extensions;
 using Microsoft.BizTalk.Component.Interop;
 using Microsoft.BizTalk.PipelineEditor.PolicyFile;
 using Microsoft.BizTalk.PipelineOM;
-using PropertyBag = Microsoft.BizTalk.PipelineEditor.PropertyBag;
-using PropertyContents = Microsoft.BizTalk.PipelineEditor.PropertyContents;
 
 namespace Be.Stateless.BizTalk.Dsl.Pipeline.CodeDom
 {
@@ -116,8 +114,10 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.CodeDom
 		private static CodeExpression ToPrimitiveType(this object value)
 		{
 			return value.IfNotNull(v => v.GetType().IsEnum)
-				? (CodeExpression) new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(value.GetType()), value.ToString())
-				: new CodePrimitiveExpression(value);
+				? new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(value.GetType()), value.ToString())
+				: value.IfNotNull(v => v is string)
+					? (CodeExpression) new CodeSnippetExpression("\"" + value + "\"")
+					: new CodePrimitiveExpression(value);
 		}
 
 		private const string VARIABLE_NAME = "stage";
