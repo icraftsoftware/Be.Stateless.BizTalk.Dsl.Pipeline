@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2012 - 2020 François Chabot
+// Copyright © 2012 - 2021 François Chabot
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ using Moq;
 using Xunit;
 using PipelinePolicy = Microsoft.BizTalk.PipelineEditor.PolicyFile.Document;
 using StagePolicy = Microsoft.BizTalk.PipelineEditor.PolicyFile.Stage;
-using static Be.Stateless.Unit.DelegateFactory;
+using static FluentAssertions.FluentActions;
 
 namespace Be.Stateless.BizTalk.Dsl.Pipeline
 {
@@ -37,7 +37,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 		[SuppressMessage("ReSharper", "ObjectCreationAsStatement")]
 		public void CanOnlyCreateStageForKnownCategory()
 		{
-			Action(() => new Stage(Guid.NewGuid(), PolicyFile.BTSReceivePolicy.Value)).Should().Throw<KeyNotFoundException>();
+			Invoking(() => new Stage(Guid.NewGuid(), PolicyFile.BTSReceivePolicy.Value)).Should().Throw<KeyNotFoundException>();
 		}
 
 		[Fact]
@@ -53,7 +53,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 			};
 			var stage = new Stage(StageCategory.Decoder.Id, pipelinePolicy);
 
-			Action(() => stage.As<IVisitable<IPipelineVisitor>>().Accept(new Mock<IPipelineVisitor>().Object))
+			Invoking(() => stage.As<IVisitable<IPipelineVisitor>>().Accept(new Mock<IPipelineVisitor>().Object))
 				.Should().Throw<ArgumentException>()
 				.WithMessage("Stage 'Decoder' should contain at least 1 components.");
 		}
@@ -75,7 +75,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 			stage.AddComponent(component);
 			stage.AddComponent(component);
 
-			Action(() => stage.As<IVisitable<IPipelineVisitor>>().Accept(new Mock<IPipelineVisitor>().Object))
+			Invoking(() => stage.As<IVisitable<IPipelineVisitor>>().Accept(new Mock<IPipelineVisitor>().Object))
 				.Should().Throw<ArgumentException>()
 				.WithMessage("Stage 'AssemblingSerializer' should contain at most 1 components.");
 		}
@@ -88,7 +88,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 
 			stage.AddComponent(component);
 
-			Action(() => stage.AddComponent(component)).Should().NotThrow();
+			Invoking(() => stage.AddComponent(component)).Should().NotThrow();
 		}
 
 		[Fact]
@@ -99,7 +99,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 
 			stage.AddComponent(component);
 
-			Action(() => stage.AddComponent(component))
+			Invoking(() => stage.AddComponent(component))
 				.Should().Throw<ArgumentException>()
 				.WithMessage($"Stage 'Decoder' has multiple '{component.GetType().FullName}' components.");
 		}

@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2012 - 2020 François Chabot
+// Copyright © 2012 - 2021 François Chabot
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ using Be.Stateless.BizTalk.Dsl.Pipeline.Xml.Serialization;
 using FluentAssertions;
 using Microsoft.BizTalk.Component;
 using Xunit;
-using static Be.Stateless.Unit.DelegateFactory;
+using static FluentAssertions.FluentActions;
 
 namespace Be.Stateless.BizTalk.Dsl.Pipeline
 {
@@ -40,7 +40,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 		[Fact]
 		public void SerializeThrowsWhenComponentNotFound()
 		{
-			Action(() => new XmlReceiveVariant1().SecondDisassembler<XmlDasmComp>(null)).Should().Throw<ArgumentOutOfRangeException>();
+			Invoking(() => new XmlReceiveVariant1().SecondDisassembler<XmlDasmComp>(null)).Should().Throw<ArgumentOutOfRangeException>();
 		}
 
 		private class XmlReceiveVariant1 : ReceivePipeline

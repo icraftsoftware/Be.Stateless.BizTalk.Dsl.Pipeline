@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2012 - 2020 François Chabot
+// Copyright © 2012 - 2021 François Chabot
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ using Microsoft.BizTalk.PipelineEditor.PolicyFile;
 using Xunit;
 using PipelinePolicy = Microsoft.BizTalk.PipelineEditor.PolicyFile.Document;
 using StagePolicy = Microsoft.BizTalk.PipelineEditor.PolicyFile.Stage;
-using static Be.Stateless.Unit.DelegateFactory;
+using static FluentAssertions.FluentActions;
 
 namespace Be.Stateless.BizTalk.Dsl.Pipeline.CodeDom
 {
@@ -41,7 +41,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.CodeDom
 
 			var sut = new CodeConstructor();
 
-			Action(() => sut.AddStage(stage))
+			Invoking(() => sut.AddStage(stage))
 				.Should().Throw<ArgumentOutOfRangeException>()
 				.WithMessage("Stage 'Any' Execution Method is not supported; only All and FirstMatch are supported.*");
 		}

@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2012 - 2020 François Chabot
+// Copyright © 2012 - 2021 François Chabot
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ using Be.Stateless.BizTalk.Dummies;
 using FluentAssertions;
 using Moq;
 using Xunit;
-using static Be.Stateless.Unit.DelegateFactory;
+using static FluentAssertions.FluentActions;
 
 namespace Be.Stateless.BizTalk.Dsl.Pipeline
 {
@@ -32,7 +32,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 		[SuppressMessage("ReSharper", "ObjectCreationAsStatement")]
 		public void CanOnlyCreateIReceiveOrISendPipelineStageListBasedPipelines()
 		{
-			Action(() => new InvalidPipeline()).Should()
+			Invoking(() => new InvalidPipeline()).Should()
 				.Throw<Exception>().WithInnerException<ArgumentException>()
 				.WithMessage(
 					"A pipeline does not support IPipelineStageList as a stage container because it does not derive from either IReceivePipelineStageList or ISendPipelineStageList.");

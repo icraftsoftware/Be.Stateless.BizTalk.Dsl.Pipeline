@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2012 - 2020 François Chabot
+// Copyright © 2012 - 2021 François Chabot
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ using Be.Stateless.BizTalk.Component;
 using FluentAssertions;
 using Microsoft.BizTalk.Component;
 using Xunit;
-using static Be.Stateless.Unit.DelegateFactory;
+using static FluentAssertions.FluentActions;
 
 namespace Be.Stateless.BizTalk.Dsl.Pipeline
 {
@@ -31,14 +31,14 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 		public void AddComponentToCompatibleStage()
 		{
 			var list = new ComponentList(new Stage(StageCategory.Decoder.Id, PolicyFile.BTSReceivePolicy.Value));
-			Action(() => list.Add(new FailedMessageRoutingEnablerComponent())).Should().NotThrow();
+			Invoking(() => list.Add(new FailedMessageRoutingEnablerComponent())).Should().NotThrow();
 		}
 
 		[Fact]
 		public void AddComponentToIncompatibleStageThrows()
 		{
 			var list = new ComponentList(new Stage(StageCategory.Decoder.Id, PolicyFile.BTSReceivePolicy.Value));
-			Action(() => list.Add(new PartyRes())).Should()
+			Invoking(() => list.Add(new PartyRes())).Should()
 				.Throw<ArgumentException>()
 				.WithMessage("Party resolution is made for any of the PartyResolver stages and is not compatible with a Decoder stage.*");
 		}
@@ -61,7 +61,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 				new FailedMessageRoutingEnablerComponent()
 			};
 
-			Action(() => list.Component<PartyRes>()).Should()
+			Invoking(() => list.Component<PartyRes>()).Should()
 				.Throw<InvalidOperationException>()
 				.WithMessage("Sequence contains no elements");
 		}

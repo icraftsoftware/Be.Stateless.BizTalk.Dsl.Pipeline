@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2012 - 2020 François Chabot
+// Copyright © 2012 - 2021 François Chabot
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ using Be.Stateless.BizTalk.Dummies;
 using FluentAssertions;
 using Moq;
 using Xunit;
-using static Be.Stateless.Unit.DelegateFactory;
+using static FluentAssertions.FluentActions;
 
 namespace Be.Stateless.BizTalk.Dsl.Pipeline.Extensions
 {
@@ -34,7 +34,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.Extensions
 		public void ReflectCategoryFromNonPipelineComponentThrows()
 		{
 			var component = new Mock<PipelineComponent>();
-			Action(() => component.Object.GetStageCategories()).Should()
+			Invoking(() => component.Object.GetStageCategories()).Should()
 				.Throw<ArgumentException>()
 				.WithMessage(
 					"PipelineComponentProxy is not categorized as a pipeline component. "
@@ -52,14 +52,14 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.Extensions
 		public void ReflectCategoryFromPipelineComponentWithMultipleStageCategoriesDoesNotThrow()
 		{
 			var component = new MultipleStageComponent();
-			Action(() => component.GetStageCategories()).Should().NotThrow();
+			Invoking(() => component.GetStageCategories()).Should().NotThrow();
 		}
 
 		[Fact]
 		public void ReflectCategoryFromPipelineComponentWithoutStageCategoryThrows()
 		{
 			var component = new NoStageComponent();
-			Action(() => component.GetStageCategories()).Should()
+			Invoking(() => component.GetStageCategories()).Should()
 				.Throw<ArgumentException>()
 				.WithMessage(
 					"NoStageComponent has not been associated with a pipeline stage category. "
