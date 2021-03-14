@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2012 - 2020 François Chabot
+// Copyright © 2012 - 2021 François Chabot
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -32,7 +32,8 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.Extensions
 		public static Type[] GetPipelineDefinitionTypes(this IEnumerable<string> assemblyPaths)
 		{
 			if (assemblyPaths == null) throw new ArgumentNullException(nameof(assemblyPaths));
-			return assemblyPaths.Select(Assembly.LoadFrom)
+			// see https://stackoverflow.com/a/1477899/1789441
+			return assemblyPaths.Select(Assembly.LoadFile)
 				// make sure all assemblies are loaded before proceeding with reflection
 				.ToArray()
 				.GetPipelineDefinitionTypes();
