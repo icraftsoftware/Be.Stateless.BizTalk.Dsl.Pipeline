@@ -33,7 +33,8 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.Extensions
 		{
 			if (assemblyPaths == null) throw new ArgumentNullException(nameof(assemblyPaths));
 			// see https://stackoverflow.com/a/1477899/1789441
-			return assemblyPaths.Select(Assembly.LoadFile)
+			// see https://stackoverflow.com/a/41858160/1789441
+			return assemblyPaths.Select(path => AppDomain.CurrentDomain.Load(Assembly.LoadFrom(path).GetName()))
 				// make sure all assemblies are loaded before proceeding with reflection
 				.ToArray()
 				.GetPipelineDefinitionTypes();
