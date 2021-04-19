@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2012 - 2020 François Chabot
+// Copyright © 2012 - 2021 François Chabot
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -26,9 +26,9 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 	internal static class PolicyFile
 	{
 		[SuppressMessage("ReSharper", "InconsistentNaming")]
-		internal static readonly Lazy<Document> BTSReceivePolicy = new Lazy<Document>(() => PolicyFileExtensions.LoadPolicyDocument(nameof(BTSReceivePolicy) + ".xml"));
+		internal static readonly Lazy<Document> BTSReceivePolicy = new(() => PolicyFileExtensions.LoadPolicyDocument(nameof(BTSReceivePolicy) + ".xml"));
 
 		[SuppressMessage("ReSharper", "InconsistentNaming")]
-		internal static readonly Lazy<Document> BTSTransmitPolicy = new Lazy<Document>(() => PolicyFileExtensions.LoadPolicyDocument(nameof(BTSTransmitPolicy) + ".xml"));
+		internal static readonly Lazy<Document> BTSTransmitPolicy = new(() => PolicyFileExtensions.LoadPolicyDocument(nameof(BTSTransmitPolicy) + ".xml"));
 	}
 }

@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2012 - 2020 François Chabot
+// Copyright © 2012 - 2021 François Chabot
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,16 +18,16 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using Be.Stateless.BizTalk.Dsl.Pipeline;
 using Be.Stateless.BizTalk.Dsl.Pipeline.Xml.Serialization;
 
-namespace Be.Stateless.BizTalk.Dsl.Pipeline.Interpreters
+namespace Be.Stateless.BizTalk.Unit.Dsl.Pipeline.Interpreters
 {
 	[SuppressMessage("ReSharper", "UnusedType.Global", Justification = "Public API")]
-	public class SendPipelineInterpreter<T> : Microsoft.BizTalk.PipelineOM.SendPipeline
-		where T : SendPipeline, new()
+	public class ReceivePipelineInterpreter<T> : Microsoft.BizTalk.PipelineOM.ReceivePipeline
+		where T : ReceivePipeline, new()
 	{
-		[SuppressMessage("Performance", "CA1810:Initialize reference type static fields inline")]
-		static SendPipelineInterpreter()
+		static ReceivePipelineInterpreter()
 		{
 			_pipelineDefinition = new T();
 		}

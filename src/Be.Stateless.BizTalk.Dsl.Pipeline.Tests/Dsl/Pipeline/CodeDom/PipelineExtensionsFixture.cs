@@ -269,7 +269,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.CodeDom
 		}
 
 		[SuppressMessage("ReSharper", "CommentTypo")]
-		private CompilerParameters CompilerParameters => new CompilerParameters(
+		private CompilerParameters CompilerParameters => new(
 			new[] {
 				// System.dll
 				typeof(System.ComponentModel.ICustomTypeDescriptor).Assembly.Location,

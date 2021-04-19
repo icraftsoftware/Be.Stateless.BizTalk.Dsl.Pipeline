@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2012 - 2020 François Chabot
+// Copyright © 2012 - 2021 François Chabot
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@
 #endregion
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Microsoft.BizTalk.Component.Interop;
 using Microsoft.BizTalk.PipelineEditor.PolicyFile;
@@ -110,7 +109,6 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 
 		#region IVisitable<IPipelineVisitor> Members
 
-		[SuppressMessage("Design", "CA1033:Interface methods should be callable by child types")]
 		void IVisitable<IPipelineVisitor>.Accept(IPipelineVisitor visitor)
 		{
 			// see Microsoft.BizTalk.PipelineEditor.PipelineCompiler::ValidateStage, Microsoft.BizTalk.PipelineOM, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35

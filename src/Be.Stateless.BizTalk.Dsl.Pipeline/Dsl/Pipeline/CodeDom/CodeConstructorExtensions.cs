@@ -50,7 +50,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.CodeDom
 			constructor.Statements.Add(
 				constructor.Statements.Count == 0
 					? new CodeVariableDeclarationStatement(typeof(Microsoft.BizTalk.PipelineOM.Stage), VARIABLE_NAME, invokeExpression)
-					: (CodeStatement) new CodeAssignStatement(new CodeVariableReferenceExpression(VARIABLE_NAME), invokeExpression));
+					: new CodeAssignStatement(new CodeVariableReferenceExpression(VARIABLE_NAME), invokeExpression));
 		}
 
 		public static CodeVariableDeclarationStatement DeclareComponent(this CodeConstructor constructor, IPipelineComponentDescriptor component, string variableName)
@@ -116,7 +116,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.CodeDom
 			return value.IfNotNull(v => v.GetType().IsEnum)
 				? new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(value.GetType()), value.ToString())
 				: value.IfNotNull(v => v is string)
-					? (CodeExpression) new CodeSnippetExpression("\"" + value + "\"")
+					? new CodeSnippetExpression("\"" + value + "\"")
 					: new CodePrimitiveExpression(value);
 		}
 

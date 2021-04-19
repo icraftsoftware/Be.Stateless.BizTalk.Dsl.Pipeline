@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2012 - 2020 François Chabot
+// Copyright © 2012 - 2021 François Chabot
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,10 +22,8 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Be.Stateless.BizTalk.Dsl.Pipeline
 {
-	[SuppressMessage("Design", "CA1724:Type names should not match namespaces")]
 	public abstract class Pipeline<T> : IFluentInterface, IVisitable<IPipelineVisitor> where T : IPipelineStageList
 	{
-		[SuppressMessage("Design", "CA1065:Do not raise exceptions in unexpected locations")]
 		static Pipeline()
 		{
 			if (!typeof(IReceivePipelineStageList).IsAssignableFrom(typeof(T)) && !typeof(ISendPipelineStageList).IsAssignableFrom(typeof(T)))
@@ -66,7 +64,6 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 
 		#region IVisitable<IPipelineVisitor> Members
 
-		[SuppressMessage("Design", "CA1033:Interface methods should be callable by child types")]
 		void IVisitable<IPipelineVisitor>.Accept(IPipelineVisitor visitor)
 		{
 			visitor.VisitPipeline(this);

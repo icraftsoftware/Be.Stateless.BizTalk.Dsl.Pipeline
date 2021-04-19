@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2012 - 2020 François Chabot
+// Copyright © 2012 - 2021 François Chabot
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 
 #endregion
 
-using System.Diagnostics.CodeAnalysis;
 using Be.Stateless.BizTalk.Dsl.Pipeline.Extensions;
 using Be.Stateless.Linq.Extensions;
 using Microsoft.BizTalk.PipelineEditor.PipelineFile;
@@ -28,7 +27,6 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 	{
 		#region Base Class Member Overrides
 
-		[SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "Done by corresponding Visit method.")]
 		protected override ComponentInfo CreateComponentInfo(IPipelineComponentDescriptor componentDescriptor)
 		{
 			var componentInfo = new ComponentInfo {
@@ -43,10 +41,9 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 			return componentInfo;
 		}
 
-		[SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "Done by corresponding Visit method.")]
 		protected override Document CreatePipelineDocument<T>(Pipeline<T> pipeline)
 		{
-			return new Document {
+			return new() {
 				PolicyFilePath = pipeline.GetPolicyFileName(),
 				Description = pipeline.Description,
 				MajorVersion = pipeline.Version.Major,
@@ -54,10 +51,9 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 			};
 		}
 
-		[SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "Done by corresponding Visit method.")]
 		protected override StageDocument CreateStageDocument(IStage stage)
 		{
-			return new StageDocument { CategoryId = stage.Category.Id };
+			return new() { CategoryId = stage.Category.Id };
 		}
 
 		#endregion
