@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2012 - 2020 François Chabot
+// Copyright © 2012 - 2021 François Chabot
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,32 +22,18 @@ using System.Reflection;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
+using Be.Stateless.BizTalk.Management;
 using Be.Stateless.Extensions;
 using Be.Stateless.Reflection;
 using Be.Stateless.Resources;
 using Be.Stateless.Xml;
 using Be.Stateless.Xml.Serialization;
 using Microsoft.BizTalk.PipelineEditor.PolicyFile;
-using Microsoft.Win32;
 
 namespace Be.Stateless.BizTalk.Dsl.Pipeline.Extensions
 {
 	internal static class PolicyFileExtensions
 	{
-		internal static string DeveloperToolsPath
-		{
-			get
-			{
-				// see Microsoft.BizTalk.Studio.Extensibility.ProjectSystemHelper, Microsoft.BizTalk.Studio.Extensibility, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
-				const string subKey = @"SOFTWARE\Microsoft\BizTalk Server\3.0\XML Tools";
-				using (var baseKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32))
-				using (var btsKey = baseKey.OpenSubKey(subKey))
-				{
-					return (string) btsKey?.GetValue("DataFilesPath");
-				}
-			}
-		}
-
 		internal static string GetPolicyFileName(this IVisitable<IPipelineVisitor> pipeline)
 		{
 			return pipeline is ReceivePipeline ? nameof(PolicyFile.BTSReceivePolicy) + ".xml" : nameof(PolicyFile.BTSTransmitPolicy) + ".xml";
@@ -60,14 +46,14 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.Extensions
 
 		internal static Document LoadPolicyDocument(string name)
 		{
-			// fallback on embedded resources to prevent build from failing on build agent without BTS installed
+			// fallback on embedded resources to prevent build failure on build agent without BTS installed
 			return LoadPolicyFileDocument(name) ?? LoadPolicyResourceDocument(name);
 		}
 
 		internal static Document LoadPolicyFileDocument(string name)
 		{
 			// see Microsoft.BizTalk.PipelineEditor.PipelineFile.Document::Load, Microsoft.BizTalk.PipelineOM, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
-			var path = DeveloperToolsPath
+			var path = BizTalkInstallation.DeveloperToolsPath
 				.IfNotNull(p => Path.Combine(p, "Pipeline Policy Files"))
 				.IfNotNull(p => Path.Combine(p, name));
 			return !path.IsNullOrEmpty() && File.Exists(path) ? (Document) Reflector.InvokeMethod(typeof(Document), "Load", path) : null;
