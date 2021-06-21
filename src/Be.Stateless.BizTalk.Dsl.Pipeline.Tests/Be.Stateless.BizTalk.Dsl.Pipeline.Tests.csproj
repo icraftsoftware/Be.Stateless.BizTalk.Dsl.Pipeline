@@ -34,9 +34,9 @@
 
   <ItemGroup>
     <PackageReference Include="Be.Stateless.BizTalk.Explorer" Version="2.0.21163.28366" />
-    <PackageReference Include="Be.Stateless.BizTalk.Messaging.Unit" Version="2.0.21104.45537" />
-    <PackageReference Include="Be.Stateless.BizTalk.Pipeline.Components" Version="2.0.21104.48675" />
-    <PackageReference Include="Be.Stateless.BizTalk.Pipeline.MicroComponents" Version="2.0.21115.31121" />
+    <PackageReference Include="Be.Stateless.BizTalk.Messaging.Unit" Version="2.0.21171.58430" />
+    <PackageReference Include="Be.Stateless.BizTalk.Pipeline.Components" Version="2.0.21173.34896" />
+    <PackageReference Include="Be.Stateless.BizTalk.Pipeline.MicroComponents" Version="2.0.21172.20897" />
     <PackageReference Include="BizTalk.Server.2020.Runtime" Version="1.0.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
