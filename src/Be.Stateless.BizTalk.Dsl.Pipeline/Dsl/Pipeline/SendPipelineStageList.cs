@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2012 - 2020 François Chabot
+// Copyright © 2012 - 2021 François Chabot
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,9 +22,9 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 	{
 		internal SendPipelineStageList()
 		{
-			PreAssemble = Add(new Stage(StageCategory.Any.Id, PolicyFile.BTSTransmitPolicy.Value));
-			Assemble = Add(new Stage(StageCategory.AssemblingSerializer.Id, PolicyFile.BTSTransmitPolicy.Value));
-			Encode = Add(new Stage(StageCategory.Encoder.Id, PolicyFile.BTSTransmitPolicy.Value));
+			PreAssemble = Add(new(StageCategory.Any.Id, PolicyFile.BTSTransmitPolicy.Value));
+			Assemble = Add(new(StageCategory.AssemblingSerializer.Id, PolicyFile.BTSTransmitPolicy.Value));
+			Encode = Add(new(StageCategory.Encoder.Id, PolicyFile.BTSTransmitPolicy.Value));
 		}
 
 		#region ISendPipelineStageList Members

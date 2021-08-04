@@ -51,7 +51,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.CodeDom
 			var memberField = new CodeMemberField {
 				Attributes = MemberAttributes.Const | MemberAttributes.Private,
 				Name = "_strPipeline",
-				Type = new CodeTypeReference(typeof(string)),
+				Type = new(typeof(string)),
 				InitExpression = new CodeSnippetExpression("@\"" + runtimePipelineDefinition + "\"")
 			};
 			@class.Members.Add(
@@ -60,7 +60,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.CodeDom
 					Name = nameof(Microsoft.BizTalk.PipelineOM.Pipeline.XmlContent),
 					GetStatements = { new CodeMethodReturnStatement(new CodeVariableReferenceExpression(memberField.Name)) },
 					HasSet = false,
-					Type = new CodeTypeReference(typeof(string))
+					Type = new(typeof(string))
 				});
 			@class.Members.Add(memberField);
 		}
@@ -71,7 +71,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.CodeDom
 			var memberField = new CodeMemberField {
 				Attributes = MemberAttributes.Const | MemberAttributes.Private,
 				Name = "_versionDependentGuid",
-				Type = new CodeTypeReference(typeof(string)),
+				Type = new(typeof(string)),
 				InitExpression = new CodePrimitiveExpression(versionDependentGuid.ToString())
 			};
 			@class.Members.Add(
@@ -82,7 +82,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.CodeDom
 						new CodeMethodReturnStatement(new CodeObjectCreateExpression(typeof(Guid), new CodeVariableReferenceExpression(memberField.Name)))
 					},
 					HasSet = false,
-					Type = new CodeTypeReference(typeof(Guid))
+					Type = new(typeof(Guid))
 				});
 			@class.Members.Add(memberField);
 		}

@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
+using Be.Stateless.BizTalk.Reflection;
 
 namespace Be.Stateless.BizTalk.Dsl.Pipeline.Extensions
 {
@@ -32,9 +33,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.Extensions
 		public static Type[] GetPipelineDefinitionTypes(this IEnumerable<string> assemblyPaths)
 		{
 			if (assemblyPaths == null) throw new ArgumentNullException(nameof(assemblyPaths));
-			// see https://stackoverflow.com/a/1477899/1789441
-			// see https://stackoverflow.com/a/41858160/1789441
-			return assemblyPaths.Select(path => AppDomain.CurrentDomain.Load(Assembly.LoadFrom(path).GetName()))
+			return assemblyPaths.Select(AssemblyLoader.Load)
 				// make sure all assemblies are loaded before proceeding with reflection
 				.ToArray()
 				.GetPipelineDefinitionTypes();

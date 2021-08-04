@@ -29,7 +29,7 @@ namespace Be.Stateless.BizTalk.Unit.Dsl.Pipeline.Interpreters
 	{
 		static ReceivePipelineInterpreter()
 		{
-			_pipelineDefinition = new T();
+			_pipelineDefinition = new();
 		}
 
 		#region Base Class Member Overrides

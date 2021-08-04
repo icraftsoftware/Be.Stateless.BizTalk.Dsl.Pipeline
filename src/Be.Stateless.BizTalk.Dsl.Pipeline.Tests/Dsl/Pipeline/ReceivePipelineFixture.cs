@@ -48,7 +48,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 			public XmlReceiveVariant1()
 			{
 				Description = "XML receive micro pipeline.";
-				Version = new Version(1, 0);
+				Version = new(1, 0);
 				Stages.Decode
 					.AddComponent(new FailedMessageRoutingEnablerComponent { SuppressRoutingFailureReport = false })
 					.AddComponent(new MicroPipelineComponent { Enabled = true });
@@ -62,7 +62,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 			public XmlReceiveVariant2()
 			{
 				Description = "XML receive micro pipeline.";
-				Version = new Version(1, 0);
+				Version = new(1, 0);
 				Decoders
 					.Add(new FailedMessageRoutingEnablerComponent { SuppressRoutingFailureReport = false })
 					.Add(new MicroPipelineComponent { Enabled = true });

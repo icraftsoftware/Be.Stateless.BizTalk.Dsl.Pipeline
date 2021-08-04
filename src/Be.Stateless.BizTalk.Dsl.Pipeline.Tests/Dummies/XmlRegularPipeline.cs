@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2012 - 2020 François Chabot
+// Copyright © 2012 - 2021 François Chabot
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 
 #endregion
 
-using System;
 using Be.Stateless.BizTalk.Component;
 using Be.Stateless.BizTalk.Dsl.Pipeline;
 using Microsoft.BizTalk.Component;
@@ -28,7 +27,7 @@ namespace Be.Stateless.BizTalk.Dummies
 		public XmlRegularPipeline()
 		{
 			Description = "XML receive regular pipeline.";
-			Version = new Version(1, 0);
+			Version = new(1, 0);
 			Stages.Decode
 				.AddComponent(
 					new FailedMessageRoutingEnablerComponent {

@@ -20,6 +20,7 @@ using System;
 using System.CodeDom.Compiler;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -30,7 +31,6 @@ using Be.Stateless.IO.Extensions;
 using Be.Stateless.Resources;
 using FluentAssertions;
 using Microsoft.BizTalk.Component;
-using Microsoft.BizTalk.Component.Utilities;
 using Microsoft.CSharp;
 using Xunit;
 
@@ -45,7 +45,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.CodeDom
 			{
 				var results = provider.CompileAssemblyFromDom(CompilerParameters, new FFReceive().ConvertToPipelineRuntimeCodeCompileUnit());
 				results.Errors.HasErrors.Should().BeFalse();
-				results.Errors.Should().BeEmpty();
+				results.Errors.Cast<object>().Should().BeEmpty();
 			}
 		}
 
@@ -56,7 +56,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.CodeDom
 			{
 				var results = provider.CompileAssemblyFromDom(CompilerParameters, new FFTransmit().ConvertToPipelineRuntimeCodeCompileUnit());
 				results.Errors.HasErrors.Should().BeFalse();
-				results.Errors.Should().BeEmpty();
+				results.Errors.Cast<object>().Should().BeEmpty();
 			}
 		}
 
@@ -67,7 +67,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.CodeDom
 			{
 				var results = provider.CompileAssemblyFromDom(CompilerParameters, new PassThruReceive().ConvertToPipelineRuntimeCodeCompileUnit());
 				results.Errors.HasErrors.Should().BeFalse();
-				results.Errors.Should().BeEmpty();
+				results.Errors.Cast<object>().Should().BeEmpty();
 			}
 		}
 
@@ -78,7 +78,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.CodeDom
 			{
 				var results = provider.CompileAssemblyFromDom(CompilerParameters, new PassThruTransmit().ConvertToPipelineRuntimeCodeCompileUnit());
 				results.Errors.HasErrors.Should().BeFalse();
-				results.Errors.Should().BeEmpty();
+				results.Errors.Cast<object>().Should().BeEmpty();
 			}
 		}
 
@@ -89,7 +89,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.CodeDom
 			{
 				var results = provider.CompileAssemblyFromDom(CompilerParameters, new XmlMicroPipeline().ConvertToPipelineRuntimeCodeCompileUnit());
 				results.Errors.HasErrors.Should().BeFalse();
-				results.Errors.Should().BeEmpty();
+				results.Errors.Cast<object>().Should().BeEmpty();
 			}
 		}
 
@@ -105,7 +105,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.CodeDom
 				provider.GenerateCodeFromCompileUnit(
 					pipeline.ConvertToPipelineRuntimeCodeCompileUnit(),
 					writer,
-					new CodeGeneratorOptions { BracingStyle = "C", IndentString = "\t", VerbatimOrder = true });
+					new() { BracingStyle = "C", IndentString = "\t", VerbatimOrder = true });
 			}
 
 			// be resilient to runtime version in CodeDom heading comment
@@ -125,7 +125,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.CodeDom
 			{
 				var results = provider.CompileAssemblyFromDom(CompilerParameters, new XmlReceive().ConvertToPipelineRuntimeCodeCompileUnit());
 				results.Errors.HasErrors.Should().BeFalse();
-				results.Errors.Should().BeEmpty();
+				results.Errors.Cast<object>().Should().BeEmpty();
 			}
 		}
 
@@ -136,7 +136,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.CodeDom
 			{
 				var results = provider.CompileAssemblyFromDom(CompilerParameters, new XmlRegularPipeline().ConvertToPipelineRuntimeCodeCompileUnit());
 				results.Errors.HasErrors.Should().BeFalse();
-				results.Errors.Should().BeEmpty();
+				results.Errors.Cast<object>().Should().BeEmpty();
 			}
 		}
 
@@ -152,7 +152,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.CodeDom
 				provider.GenerateCodeFromCompileUnit(
 					pipeline.ConvertToPipelineRuntimeCodeCompileUnit(),
 					writer,
-					new CodeGeneratorOptions { BracingStyle = "C", IndentString = "\t", VerbatimOrder = true });
+					new() { BracingStyle = "C", IndentString = "\t", VerbatimOrder = true });
 			}
 
 			// be resilient to runtime version in CodeDom heading comment
@@ -172,7 +172,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.CodeDom
 			{
 				var results = provider.CompileAssemblyFromDom(CompilerParameters, new XmlTransmit().ConvertToPipelineRuntimeCodeCompileUnit());
 				results.Errors.HasErrors.Should().BeFalse();
-				results.Errors.Should().BeEmpty();
+				results.Errors.Cast<object>().Should().BeEmpty();
 			}
 		}
 
@@ -181,14 +181,14 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.CodeDom
 			public FFReceive()
 			{
 				Description = "Flat-File receive micro-pipeline.";
-				Version = new Version(1, 0);
+				Version = new(1, 0);
 				Stages.Decode
 					.AddComponent(new FailedMessageRoutingEnablerComponent())
 					.AddComponent(new MicroPipelineComponent { Enabled = true });
 				Stages.Disassemble
 					.AddComponent(
 						new FFDasmComp {
-							DocumentSpecName = new SchemaWithNone(typeof(Microsoft.XLANGs.BaseTypes.Any).AssemblyQualifiedName),
+							DocumentSpecName = new(typeof(Microsoft.XLANGs.BaseTypes.Any).AssemblyQualifiedName),
 							ValidateDocumentStructure = true
 						});
 				Stages.Validate
@@ -201,7 +201,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.CodeDom
 			public FFTransmit()
 			{
 				Description = "Flat-File send micro-pipeline.";
-				Version = new Version(1, 0);
+				Version = new(1, 0);
 				Stages.PreAssemble
 					.AddComponent(new FailedMessageRoutingEnablerComponent())
 					.AddComponent(new MicroPipelineComponent { Enabled = true });
@@ -217,7 +217,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.CodeDom
 			public PassThruReceive()
 			{
 				Description = "Pass-through receive micro-pipeline.";
-				Version = new Version(1, 0);
+				Version = new(1, 0);
 				Stages.Decode
 					.AddComponent(new FailedMessageRoutingEnablerComponent())
 					.AddComponent(new MicroPipelineComponent { Enabled = true });
@@ -229,7 +229,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.CodeDom
 			public PassThruTransmit()
 			{
 				Description = "Pass-through send micro-pipeline.";
-				Version = new Version(1, 0);
+				Version = new(1, 0);
 				Stages.PreAssemble
 					.AddComponent(new FailedMessageRoutingEnablerComponent())
 					.AddComponent(new MicroPipelineComponent { Enabled = true });
@@ -241,7 +241,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.CodeDom
 			public XmlReceive()
 			{
 				Description = "XML receive micro-pipeline.";
-				Version = new Version(1, 0);
+				Version = new(1, 0);
 				Stages.Decode
 					.AddComponent(new FailedMessageRoutingEnablerComponent())
 					.AddComponent(new MicroPipelineComponent { Enabled = true });
@@ -257,7 +257,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.CodeDom
 			public XmlTransmit()
 			{
 				Description = "XML send micro-pipeline.";
-				Version = new Version(1, 0);
+				Version = new(1, 0);
 				Stages.PreAssemble
 					.AddComponent(new FailedMessageRoutingEnablerComponent())
 					.AddComponent(new MicroPipelineComponent { Enabled = true });

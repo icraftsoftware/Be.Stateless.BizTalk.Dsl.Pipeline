@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2012 - 2020 François Chabot
+// Copyright © 2012 - 2021 François Chabot
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -41,12 +41,12 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.Xml.Serialization
 		{
 			var overrides = new XmlAttributeOverrides();
 			overrides.Ignore<Document>(d => d.PolicyFilePath);
-			overrides.Add<Document>(d => d.CategoryId, new XmlAttributes { XmlElements = { new XmlElementAttribute(nameof(Document.CategoryId), typeof(string)) } });
-			overrides.Add<Document>(d => d.FriendlyName, new XmlAttributes { XmlElements = { new XmlElementAttribute(nameof(Document.FriendlyName), typeof(string)) } });
+			overrides.Add<Document>(d => d.CategoryId, new() { XmlElements = { new XmlElementAttribute(nameof(Document.CategoryId), typeof(string)) } });
+			overrides.Add<Document>(d => d.FriendlyName, new() { XmlElements = { new XmlElementAttribute(nameof(Document.FriendlyName), typeof(string)) } });
 			overrides.Ignore<PolicyFileStage>(s => s.CategoryId);
 			overrides.Add<PolicyFileStage>(
 				s => s.PolicyFileStage,
-				new XmlAttributes { XmlElements = { new XmlElementAttribute(nameof(PolicyFileStage.PolicyFileStage), typeof(Microsoft.BizTalk.PipelineEditor.PolicyFile.Stage)) } });
+				new() { XmlElements = { new XmlElementAttribute(nameof(PolicyFileStage.PolicyFileStage), typeof(Microsoft.BizTalk.PipelineEditor.PolicyFile.Stage)) } });
 			return CachingXmlSerializerFactory.Create(typeof(Document), overrides);
 		}
 

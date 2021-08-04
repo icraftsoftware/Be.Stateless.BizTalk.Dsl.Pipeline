@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2012 - 2020 François Chabot
+// Copyright © 2012 - 2021 François Chabot
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,10 +22,10 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 	{
 		internal ReceivePipelineStageList()
 		{
-			Decode = Add(new Stage(StageCategory.Decoder.Id, PolicyFile.BTSReceivePolicy.Value));
-			Disassemble = Add(new Stage(StageCategory.DisassemblingParser.Id, PolicyFile.BTSReceivePolicy.Value));
-			Validate = Add(new Stage(StageCategory.Validator.Id, PolicyFile.BTSReceivePolicy.Value));
-			ResolveParty = Add(new Stage(StageCategory.PartyResolver.Id, PolicyFile.BTSReceivePolicy.Value));
+			Decode = Add(new(StageCategory.Decoder.Id, PolicyFile.BTSReceivePolicy.Value));
+			Disassemble = Add(new(StageCategory.DisassemblingParser.Id, PolicyFile.BTSReceivePolicy.Value));
+			Validate = Add(new(StageCategory.Validator.Id, PolicyFile.BTSReceivePolicy.Value));
+			ResolveParty = Add(new(StageCategory.PartyResolver.Id, PolicyFile.BTSReceivePolicy.Value));
 		}
 
 		#region IReceivePipelineStageList Members

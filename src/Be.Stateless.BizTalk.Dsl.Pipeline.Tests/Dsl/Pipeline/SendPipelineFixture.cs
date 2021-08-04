@@ -48,7 +48,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 			public XmlTransmitVariant1()
 			{
 				Description = "XML send micro pipeline.";
-				Version = new Version(1, 0);
+				Version = new(1, 0);
 				Stages.PreAssemble
 					.AddComponent(new FailedMessageRoutingEnablerComponent { SuppressRoutingFailureReport = false })
 					.AddComponent(new MicroPipelineComponent { Enabled = true });
@@ -62,7 +62,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 			public XmlTransmitVariant2()
 			{
 				Description = "XML send micro pipeline.";
-				Version = new Version(1, 0);
+				Version = new(1, 0);
 				PreAssemblers
 					.Add(new FailedMessageRoutingEnablerComponent { SuppressRoutingFailureReport = false })
 					.Add(new MicroPipelineComponent { Enabled = true });

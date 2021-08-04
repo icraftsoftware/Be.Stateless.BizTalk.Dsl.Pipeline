@@ -34,7 +34,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 		protected Pipeline(T stages)
 		{
 			Stages = stages;
-			Version = new Version(1, 0);
+			Version = new(1, 0);
 			VersionDependentGuid = Guid.NewGuid();
 		}
 
