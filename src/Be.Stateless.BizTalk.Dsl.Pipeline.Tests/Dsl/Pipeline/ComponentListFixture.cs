@@ -63,7 +63,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 
 			Invoking(() => list.Component<PartyRes>()).Should()
 				.Throw<InvalidOperationException>()
-				.WithMessage("Sequence contains no elements");
+				.WithMessage("Stage 'Decoder' has no 'PartyRes' component.");
 		}
 	}
 }

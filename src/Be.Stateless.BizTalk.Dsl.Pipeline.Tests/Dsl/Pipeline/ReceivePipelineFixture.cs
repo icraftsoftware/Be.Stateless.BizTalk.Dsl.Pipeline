@@ -40,7 +40,9 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 		[Fact]
 		public void SerializeThrowsWhenComponentNotFound()
 		{
-			Invoking(() => new XmlReceiveVariant1().SecondDisassembler<XmlDasmComp>(null)).Should().Throw<ArgumentOutOfRangeException>();
+			Invoking(() => new XmlReceiveVariant1().SecondDisassembler<XmlDasmComp>(null))
+				.Should().Throw<InvalidOperationException>()
+				.WithMessage("Stage 'DisassemblingParser' has no 'XmlDasmComp' component.");
 		}
 
 		private class XmlReceiveVariant1 : ReceivePipeline

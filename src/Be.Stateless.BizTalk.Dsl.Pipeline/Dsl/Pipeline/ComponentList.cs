@@ -50,12 +50,16 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 
 		public T Component<T>() where T : IBaseComponent, IPersistPropertyBag
 		{
-			return this.OfType<PipelineComponentDescriptor<T>>().Single();
+			return this.OfType<PipelineComponentDescriptor<T>>().SingleOrDefault()
+				?? throw new InvalidOperationException($"Stage '{Stage.Category.Name}' has no '{typeof(T).Name}' component.");
 		}
 
 		public IConfigurableComponent<T, IComponentList> ComponentAt<T>(int index) where T : IBaseComponent, IPersistPropertyBag
 		{
-			return new ConfigurableComponent<T, IComponentList>((PipelineComponentDescriptor<T>) this.ElementAt(index), this);
+			return new ConfigurableComponent<T, IComponentList>(
+				(PipelineComponentDescriptor<T>) this.ElementAtOrDefault(index)
+				?? throw new InvalidOperationException($"Stage '{Stage.Category.Name}' has no '{typeof(T).Name}' component."),
+				this);
 		}
 
 		public IComponentList Component<T>(Action<T> componentConfigurator) where T : IBaseComponent, IPersistPropertyBag
@@ -117,7 +121,10 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 
 		private IConfigurableComponent<T, IComponentList> ComponentOfTypeAt<T>(int index) where T : IBaseComponent, IPersistPropertyBag
 		{
-			return new ConfigurableComponent<T, IComponentList>(this.OfType<PipelineComponentDescriptor<T>>().ElementAt(index), this);
+			return new ConfigurableComponent<T, IComponentList>(
+				this.OfType<PipelineComponentDescriptor<T>>().ElementAtOrDefault(index)
+				?? throw new InvalidOperationException($"Stage '{Stage.Category.Name}' has no '{typeof(T).Name}' component."),
+				this);
 		}
 	}
 }

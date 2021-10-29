@@ -40,7 +40,9 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 		[Fact]
 		public void SerializeThrowsWhenComponentNotFound()
 		{
-			Invoking(() => new XmlTransmitVariant1().SecondAssembler<XmlDasmComp>(null)).Should().Throw<ArgumentOutOfRangeException>();
+			Invoking(() => new XmlTransmitVariant1().SecondAssembler<XmlAsmComp>(null))
+				.Should().Throw<InvalidOperationException>()
+				.WithMessage("Stage 'AssemblingSerializer' has no 'XmlAsmComp' component.");
 		}
 
 		private class XmlTransmitVariant1 : SendPipeline
