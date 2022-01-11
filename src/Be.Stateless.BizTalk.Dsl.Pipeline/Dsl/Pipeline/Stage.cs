@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2012 - 2021 François Chabot
+// Copyright © 2012 - 2022 François Chabot
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -109,13 +109,13 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 
 		#region IVisitable<IPipelineVisitor> Members
 
-		void IVisitable<IPipelineVisitor>.Accept(IPipelineVisitor visitor)
+		T IVisitable<IPipelineVisitor>.Accept<T>(T visitor)
 		{
 			// see Microsoft.BizTalk.PipelineEditor.PipelineCompiler::ValidateStage, Microsoft.BizTalk.PipelineOM, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
 			EnsureAtLeastComponent();
 			EnsureAtMostComponent();
 			visitor.VisitStage(this);
-			((IVisitable<IPipelineVisitor>) Components).Accept(visitor);
+			return ((IVisitable<IPipelineVisitor>) Components).Accept(visitor);
 		}
 
 		#endregion

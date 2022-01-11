@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2012 - 2020 François Chabot
+// Copyright © 2012 - 2022 François Chabot
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -30,9 +30,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.Xml.Serialization
 
 		protected override Document CreatePipelineDocument()
 		{
-			var visitor = new PipelineDesignerDocumentBuilderVisitor();
-			Pipeline.Accept(visitor);
-			return visitor.Document;
+			return Pipeline.Accept(new PipelineDesignerDocumentBuilderVisitor()).Document;
 		}
 
 		protected override XmlSerializer CreateXmlSerializer()

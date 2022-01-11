@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2012 - 2021 François Chabot
+// Copyright © 2012 - 2022 François Chabot
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,7 +22,8 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Be.Stateless.BizTalk.Dsl.Pipeline
 {
-	public abstract class Pipeline<T> : IFluentInterface, IVisitable<IPipelineVisitor> where T : IPipelineStageList
+	public abstract class Pipeline<T> : IFluentInterface, IVisitable<IPipelineVisitor>
+		where T : IPipelineStageList
 	{
 		static Pipeline()
 		{
@@ -40,15 +41,15 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 
 		#region IFluentInterface Members
 
-		[EditorBrowsable(EditorBrowsableState.Never)]
 		[SuppressMessage("ReSharper", "BaseObjectEqualsIsObjectEquals")]
+		[EditorBrowsable(EditorBrowsableState.Never)]
 		public override bool Equals(object obj)
 		{
 			return base.Equals(obj);
 		}
 
-		[EditorBrowsable(EditorBrowsableState.Never)]
 		[SuppressMessage("ReSharper", "BaseObjectGetHashCodeCallInGetHashCode")]
+		[EditorBrowsable(EditorBrowsableState.Never)]
 		public override int GetHashCode()
 		{
 			return base.GetHashCode();
@@ -64,10 +65,10 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 
 		#region IVisitable<IPipelineVisitor> Members
 
-		void IVisitable<IPipelineVisitor>.Accept(IPipelineVisitor visitor)
+		T1 IVisitable<IPipelineVisitor>.Accept<T1>(T1 visitor)
 		{
 			visitor.VisitPipeline(this);
-			((IVisitable<IPipelineVisitor>) Stages).Accept(visitor);
+			return ((IVisitable<IPipelineVisitor>) Stages).Accept(visitor);
 		}
 
 		#endregion

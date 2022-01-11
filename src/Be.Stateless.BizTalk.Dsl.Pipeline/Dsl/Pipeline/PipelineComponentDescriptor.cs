@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2012 - 2020 François Chabot
+// Copyright © 2012 - 2022 François Chabot
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -68,26 +68,17 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 			}
 		}
 
-		void IVisitable<IPipelineVisitor>.Accept(IPipelineVisitor visitor)
+		T1 IVisitable<IPipelineVisitor>.Accept<T1>(T1 visitor)
 		{
 			visitor.VisitComponent(this);
+			return visitor;
 		}
-
-		#endregion
-
-		private readonly T _pipelineComponent;
-
-		#region IBaseComponent Delegation
 
 		public string Name => _pipelineComponent.Name;
 
 		public string Description => _pipelineComponent.Description;
 
 		public string Version => _pipelineComponent.Version;
-
-		#endregion
-
-		#region IPersistPropertyBag Delegation
 
 		public void GetClassID(out Guid classID)
 		{
@@ -110,5 +101,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 		}
 
 		#endregion
+
+		private readonly T _pipelineComponent;
 	}
 }
