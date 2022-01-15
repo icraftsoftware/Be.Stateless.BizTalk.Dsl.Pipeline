@@ -22,24 +22,23 @@ using System.Xml;
 using System.Xml.Serialization;
 using Microsoft.BizTalk.PipelineEditor.PipelineFile;
 
-namespace Be.Stateless.BizTalk.Dsl.Pipeline
+namespace Be.Stateless.BizTalk.Dsl.Pipeline.Xml.Serialization
 {
-	public class PipelineDesignerDocumentSerializer : IDslSerializer
+	public abstract class PipelineSerializer : IDslSerializer
 	{
-		internal PipelineDesignerDocumentSerializer(IVisitable<IPipelineVisitor> pipeline)
+		protected PipelineSerializer(IVisitable<IPipelineVisitor> pipeline)
 		{
-			_pipeline = pipeline;
+			Pipeline = pipeline;
 		}
 
 		#region IDslSerializer Members
 
 		public string Serialize()
 		{
-			var pipelineDocument = GetDesignerDocument();
 			using (var writer = new StringWriter())
+			using (var xmlTextWriter = new XmlTextWriter(writer))
 			{
-				var serializer = new XmlSerializer(typeof(Document));
-				serializer.Serialize(writer, pipelineDocument);
+				Serialize(xmlTextWriter);
 				return writer.ToString();
 			}
 		}
@@ -54,24 +53,27 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 
 		public void Write(Stream stream)
 		{
-			var pipelineDocument = GetDesignerDocument();
 			using (var xmlTextWriter = new XmlTextWriter(stream, Encoding.Unicode))
 			{
-				xmlTextWriter.Formatting = Formatting.Indented;
-				var xmlSerializer = new XmlSerializer(typeof(Document));
-				xmlSerializer.Serialize(xmlTextWriter, pipelineDocument);
+				Serialize(xmlTextWriter);
 			}
 		}
 
 		#endregion
 
-		private Document GetDesignerDocument()
+		protected IVisitable<IPipelineVisitor> Pipeline { get; }
+
+		private void Serialize(XmlTextWriter xmlTextWriter)
 		{
-			var visitor = new PipelineDesignerDocumentBuilderVisitor();
-			_pipeline.Accept(visitor);
-			return visitor.Document;
+			var pipelineDocument = CreatePipelineDocument();
+			xmlTextWriter.Formatting = Formatting.Indented;
+			xmlTextWriter.QuoteChar = '\'';
+			var xmlSerializer = CreateXmlSerializer();
+			xmlSerializer.Serialize(xmlTextWriter, pipelineDocument);
 		}
 
-		private readonly IVisitable<IPipelineVisitor> _pipeline;
+		protected abstract Document CreatePipelineDocument();
+
+		protected abstract XmlSerializer CreateXmlSerializer();
 	}
 }

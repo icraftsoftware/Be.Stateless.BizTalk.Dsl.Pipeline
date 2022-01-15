@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2012 - 2020 François Chabot
+// Copyright © 2012 - 2022 François Chabot
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Be.Stateless.BizTalk.Dsl.Pipeline.Extensions;
 using Be.Stateless.Linq.Extensions;
 using Microsoft.BizTalk.Component.Interop;
 
@@ -42,14 +43,23 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 			return this;
 		}
 
+		public bool Contains<T>() where T : IBaseComponent, IPersistPropertyBag
+		{
+			return this.OfType<PipelineComponentDescriptor<T>>().Any();
+		}
+
 		public T Component<T>() where T : IBaseComponent, IPersistPropertyBag
 		{
-			return this.OfType<PipelineComponentDescriptor<T>>().Single();
+			return this.OfType<PipelineComponentDescriptor<T>>().SingleOrDefault()
+				?? throw new InvalidOperationException($"Stage '{Stage.Category.Name}' has no '{typeof(T).Name}' component.");
 		}
 
 		public IConfigurableComponent<T, IComponentList> ComponentAt<T>(int index) where T : IBaseComponent, IPersistPropertyBag
 		{
-			return new ConfigurableComponent<T, IComponentList>((PipelineComponentDescriptor<T>) this.ElementAt(index), this);
+			return new ConfigurableComponent<T, IComponentList>(
+				(PipelineComponentDescriptor<T>) this.ElementAtOrDefault(index)
+				?? throw new InvalidOperationException($"Stage '{Stage.Category.Name}' has no '{typeof(T).Name}' component."),
+				this);
 		}
 
 		public IComponentList Component<T>(Action<T> componentConfigurator) where T : IBaseComponent, IPersistPropertyBag
@@ -94,9 +104,10 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 
 		#region IVisitable<IPipelineVisitor> Members
 
-		void IVisitable<IPipelineVisitor>.Accept(IPipelineVisitor visitor)
+		T IVisitable<IPipelineVisitor>.Accept<T>(T visitor)
 		{
 			this.Cast<IVisitable<IPipelineVisitor>>().ForEach(component => component.Accept(visitor));
+			return visitor;
 		}
 
 		#endregion
@@ -104,14 +115,17 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 		private Stage Stage { get; }
 
 		[SuppressMessage("ReSharper", "UnusedMethodReturnValue.Global", Justification = "Public DSL API.")]
-		public IComponentList Add<T>(T component) where T : IBaseComponent, IPersistPropertyBag
+		public IComponentList Add<T>(T component) where T : IBaseComponent, IComponentUI, IPersistPropertyBag
 		{
 			return ((IComponentList) this).Add(component);
 		}
 
 		private IConfigurableComponent<T, IComponentList> ComponentOfTypeAt<T>(int index) where T : IBaseComponent, IPersistPropertyBag
 		{
-			return new ConfigurableComponent<T, IComponentList>(this.OfType<PipelineComponentDescriptor<T>>().ElementAt(index), this);
+			return new ConfigurableComponent<T, IComponentList>(
+				this.OfType<PipelineComponentDescriptor<T>>().ElementAtOrDefault(index)
+				?? throw new InvalidOperationException($"Stage '{Stage.Category.Name}' has no '{typeof(T).Name}' component."),
+				this);
 		}
 	}
 }

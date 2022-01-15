@@ -1,0 +1,115 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<Document xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' PolicyFilePath='BTSTransmitPolicy.xml' MajorVersion='1' MinorVersion='0'>
+  <Description>XML receive micro pipeline.</Description>
+  <Stages>
+    <Stage CategoryId='9d0e4101-4cce-4536-83fa-4a5040674ad6'>
+      <Components>
+        <Component>
+          <Name>Be.Stateless.BizTalk.Component.FailedMessageRoutingEnablerComponent</Name>
+          <ComponentName>FailedMessageRoutingEnablerComponent</ComponentName>
+          <Description>Enables routing of failed messages and prevents routing failure reports from being generated.</Description>
+          <Version>2.0</Version>
+          <Properties>
+            <Property Name='Enabled'>
+              <Value xsi:type='xsd:boolean'>true</Value>
+            </Property>
+            <Property Name='EnableFailedMessageRouting'>
+              <Value xsi:type='xsd:boolean'>true</Value>
+            </Property>
+            <Property Name='SuppressRoutingFailureReport'>
+              <Value xsi:type='xsd:boolean'>false</Value>
+            </Property>
+          </Properties>
+          <CachedDisplayName>FailedMessageRoutingEnablerComponent</CachedDisplayName>
+          <CachedIsManaged>true</CachedIsManaged>
+        </Component>
+        <Component>
+          <Name>Be.Stateless.BizTalk.Component.MicroPipelineComponent</Name>
+          <ComponentName>MicroPipelineComponent</ComponentName>
+          <Description>Runs a sequence of micro components as if they were regular pipeline components.</Description>
+          <Version>2.0</Version>
+          <Properties>
+            <Property Name='Enabled'>
+              <Value xsi:type='xsd:boolean'>true</Value>
+            </Property>
+            <Property Name='Components'>
+              <Value xsi:type='xsd:string'>&lt;mComponents&gt;&lt;mComponent name='Be.Stateless.BizTalk.MicroComponent.ContextPropertyExtractor, Be.Stateless.BizTalk.Pipeline.MicroComponents, Version=2.1.0.0, Culture=neutral, PublicKeyToken=3707daa0b119fc14'&gt;&lt;Extractors&gt;&lt;s0:Properties xmlns:s0='urn:schemas.stateless.be:biztalk:annotations:2013:01' xmlns:s1='urn:schemas.stateless.be:biztalk:properties:system:2012:04'&gt;&lt;s1:MapTypeName mode='promote' xpath='/letter/*/from' /&gt;&lt;s1:MessageType xpath='/letter/*/paragraph' /&gt;&lt;/s0:Properties&gt;&lt;/Extractors&gt;&lt;/mComponent&gt;&lt;/mComponents&gt;</Value>
+            </Property>
+          </Properties>
+          <CachedDisplayName>MicroPipelineComponent</CachedDisplayName>
+          <CachedIsManaged>true</CachedIsManaged>
+        </Component>
+      </Components>
+    </Stage>
+    <Stage CategoryId='9d0e4107-4cce-4536-83fa-4a5040674ad6'>
+      <Components>
+        <Component>
+          <Name>Microsoft.BizTalk.Component.XmlAsmComp</Name>
+          <ComponentName>XML assembler</ComponentName>
+          <Description>XML assembler component.</Description>
+          <Version>1.0</Version>
+          <Properties>
+            <Property Name='EnvelopeDocSpecNames'>
+              <Value xsi:type='xsd:string' />
+            </Property>
+            <Property Name='EnvelopeSpecTargetNamespaces'>
+              <Value xsi:type='xsd:string' />
+            </Property>
+            <Property Name='DocumentSpecNames'>
+              <Value xsi:type='xsd:string' />
+            </Property>
+            <Property Name='DocumentSpecTargetNamespaces'>
+              <Value xsi:type='xsd:string' />
+            </Property>
+            <Property Name='XmlAsmProcessingInstructions'>
+              <Value xsi:type='xsd:string' />
+            </Property>
+            <Property Name='ProcessingInstructionsOptions'>
+              <Value xsi:type='xsd:int'>0</Value>
+            </Property>
+            <Property Name='ProcessingInstructionsScope'>
+              <Value xsi:type='xsd:int'>0</Value>
+            </Property>
+            <Property Name='AddXmlDeclaration'>
+              <Value xsi:type='xsd:boolean'>true</Value>
+            </Property>
+            <Property Name='TargetCharset'>
+              <Value xsi:type='xsd:string' />
+            </Property>
+            <Property Name='TargetCodePage'>
+              <Value xsi:type='xsd:int'>0</Value>
+            </Property>
+            <Property Name='PreserveBom'>
+              <Value xsi:type='xsd:boolean'>true</Value>
+            </Property>
+            <Property Name='HiddenProperties'>
+              <Value xsi:type='xsd:string'>EnvelopeSpecTargetNamespaces,DocumentSpecTargetNamespaces,TargetCodePage</Value>
+            </Property>
+          </Properties>
+          <CachedDisplayName>XML assembler</CachedDisplayName>
+          <CachedIsManaged>true</CachedIsManaged>
+        </Component>
+      </Components>
+    </Stage>
+    <Stage CategoryId='9d0e4108-4cce-4536-83fa-4a5040674ad6'>
+      <Components>
+        <Component>
+          <Name>Be.Stateless.BizTalk.Component.MicroPipelineComponent</Name>
+          <ComponentName>MicroPipelineComponent</ComponentName>
+          <Description>Runs a sequence of micro components as if they were regular pipeline components.</Description>
+          <Version>2.0</Version>
+          <Properties>
+            <Property Name='Enabled'>
+              <Value xsi:type='xsd:boolean'>true</Value>
+            </Property>
+            <Property Name='Components'>
+              <Value xsi:type='xsd:string' />
+            </Property>
+          </Properties>
+          <CachedDisplayName>MicroPipelineComponent</CachedDisplayName>
+          <CachedIsManaged>true</CachedIsManaged>
+        </Component>
+      </Components>
+    </Stage>
+  </Stages>
+</Document>

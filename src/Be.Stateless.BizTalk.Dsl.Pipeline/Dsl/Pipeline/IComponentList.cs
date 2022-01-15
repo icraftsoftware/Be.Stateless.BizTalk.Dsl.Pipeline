@@ -25,7 +25,12 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 	[SuppressMessage("ReSharper", "UnusedMethodReturnValue.Global", Justification = "Public DSL API.")]
 	public interface IComponentList : IFluentInterface
 	{
-		IComponentList Add<T>(T component) where T : IBaseComponent, IPersistPropertyBag;
+		int Count { get; }
+
+		// IComponentUI support is required in compliance with Microsoft.BizTalk.PipelineEditor.PipelineCompiler::ValidateStage, Microsoft.BizTalk.PipelineOM, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+		IComponentList Add<T>(T component) where T : IBaseComponent, IComponentUI, IPersistPropertyBag;
+
+		bool Contains<T>() where T : IBaseComponent, IPersistPropertyBag;
 
 		T Component<T>() where T : IBaseComponent, IPersistPropertyBag;
 

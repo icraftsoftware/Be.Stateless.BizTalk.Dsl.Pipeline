@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2012 - 2020 François Chabot
+// Copyright © 2012 - 2021 François Chabot
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -76,7 +76,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 
 		public bool Equals(StageCategory other)
 		{
-			return !(other is null) && (ReferenceEquals(this, other) || other.Id.Equals(Id));
+			return other is not null && (ReferenceEquals(this, other) || other.Id.Equals(Id));
 		}
 
 		#endregion
@@ -85,7 +85,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 
 		public override bool Equals(object obj)
 		{
-			return !(obj is null) && (ReferenceEquals(this, obj) || obj is StageCategory category && Equals(category));
+			return obj is not null && (ReferenceEquals(this, obj) || obj is StageCategory category && Equals(category));
 		}
 
 		public override int GetHashCode()

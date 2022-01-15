@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2012 - 2020 François Chabot
+// Copyright © 2012 - 2021 François Chabot
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,43 +16,19 @@
 
 #endregion
 
-using System;
-using System.Linq;
+using Be.Stateless.BizTalk.Dsl.Pipeline.Extensions;
 using Be.Stateless.Linq.Extensions;
-using Microsoft.BizTalk.PipelineEditor;
 using Microsoft.BizTalk.PipelineEditor.PipelineFile;
 using StageDocument = Microsoft.BizTalk.PipelineEditor.PipelineFile.Stage;
 
 namespace Be.Stateless.BizTalk.Dsl.Pipeline
 {
-	public class PipelineDesignerDocumentBuilderVisitor : IPipelineVisitor
+	public class PipelineDesignerDocumentBuilderVisitor : PipelineVisitor
 	{
-		#region IPipelineVisitor Members
+		#region Base Class Member Overrides
 
-		public void VisitPipeline<T>(Pipeline<T> pipeline) where T : IPipelineStageList
+		protected override ComponentInfo CreateComponentInfo(IPipelineComponentDescriptor componentDescriptor)
 		{
-			Document = CreatePipelineDocument(pipeline);
-		}
-
-		public void VisitStage(IStage stage)
-		{
-			_stageDocument = CreateStageDocument(stage);
-			Document.Stages.Add(_stageDocument);
-		}
-
-		public void VisitComponent(IPipelineComponentDescriptor componentDescriptor)
-		{
-			var componentInfo = CreateComponentInfo(componentDescriptor);
-			_stageDocument.Components.Add(componentInfo);
-		}
-
-		#endregion
-
-		public Document Document { get; private set; }
-
-		protected ComponentInfo CreateComponentInfo(IPipelineComponentDescriptor componentDescriptor)
-		{
-			if (componentDescriptor == null) throw new ArgumentNullException(nameof(componentDescriptor));
 			var componentInfo = new ComponentInfo {
 				QualifiedNameOrClassId = componentDescriptor.FullName,
 				ComponentName = componentDescriptor.Name,
@@ -61,29 +37,25 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 				CachedDisplayName = componentDescriptor.Name,
 				CachedIsManaged = true
 			};
-			var bag = new PropertyBag();
-			componentDescriptor.Save(bag, false, false);
-			bag.Properties.Cast<PropertyContents>().ForEach(property => componentInfo.ComponentProperties.Add(property));
+			componentDescriptor.PropertyContents.ForEach(property => componentInfo.ComponentProperties.Add(property));
 			return componentInfo;
 		}
 
-		protected Document CreatePipelineDocument<T>(Pipeline<T> pipeline) where T : IPipelineStageList
+		protected override Document CreatePipelineDocument<T>(Pipeline<T> pipeline)
 		{
-			if (pipeline == null) throw new ArgumentNullException(nameof(pipeline));
-			return new Document {
-				PolicyFilePath = typeof(IReceivePipelineStageList).IsAssignableFrom(typeof(T)) ? "BTSReceivePolicy.xml" : "BTSTransmitPolicy.xml",
+			return new() {
+				PolicyFilePath = pipeline.GetPolicyFileName(),
 				Description = pipeline.Description,
 				MajorVersion = pipeline.Version.Major,
 				MinorVersion = pipeline.Version.Minor
 			};
 		}
 
-		protected StageDocument CreateStageDocument(IStage stage)
+		protected override StageDocument CreateStageDocument(IStage stage)
 		{
-			if (stage == null) throw new ArgumentNullException(nameof(stage));
-			return new StageDocument { CategoryId = stage.Category.Id };
+			return new() { CategoryId = stage.Category.Id };
 		}
 
-		private StageDocument _stageDocument;
+		#endregion
 	}
 }

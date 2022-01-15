@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2012 - 2020 François Chabot
+// Copyright © 2012 - 2022 François Chabot
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,13 +22,14 @@ using Be.Stateless.Linq.Extensions;
 
 namespace Be.Stateless.BizTalk.Dsl.Pipeline
 {
-	public class StageList : List<Stage>, IVisitable<IPipelineVisitor>
+	public abstract class StageList : List<Stage>, IVisitable<IPipelineVisitor>
 	{
 		#region IVisitable<IPipelineVisitor> Members
 
-		void IVisitable<IPipelineVisitor>.Accept(IPipelineVisitor visitor)
+		T IVisitable<IPipelineVisitor>.Accept<T>(T visitor)
 		{
 			this.Cast<IVisitable<IPipelineVisitor>>().ForEach(stage => stage.Accept(visitor));
+			return visitor;
 		}
 
 		#endregion

@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2012 - 2020 François Chabot
+// Copyright © 2012 - 2021 François Chabot
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,11 +18,11 @@
 
 using System;
 using Be.Stateless.BizTalk.Component;
-using Be.Stateless.BizTalk.Dsl.Pipeline.Extensions;
+using Be.Stateless.BizTalk.Dsl.Pipeline.Xml.Serialization;
 using FluentAssertions;
 using Microsoft.BizTalk.Component;
 using Xunit;
-using static Be.Stateless.DelegateFactory;
+using static FluentAssertions.FluentActions;
 
 namespace Be.Stateless.BizTalk.Dsl.Pipeline
 {
@@ -40,7 +40,9 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 		[Fact]
 		public void SerializeThrowsWhenComponentNotFound()
 		{
-			Action(() => new XmlTransmitVariant1().SecondAssembler<XmlDasmComp>(null)).Should().Throw<ArgumentOutOfRangeException>();
+			Invoking(() => new XmlTransmitVariant1().SecondAssembler<XmlAsmComp>(null))
+				.Should().Throw<InvalidOperationException>()
+				.WithMessage("Stage 'AssemblingSerializer' has no 'XmlAsmComp' component.");
 		}
 
 		private class XmlTransmitVariant1 : SendPipeline
@@ -48,7 +50,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 			public XmlTransmitVariant1()
 			{
 				Description = "XML send micro pipeline.";
-				Version = new Version(1, 0);
+				Version = new(1, 0);
 				Stages.PreAssemble
 					.AddComponent(new FailedMessageRoutingEnablerComponent { SuppressRoutingFailureReport = false })
 					.AddComponent(new MicroPipelineComponent { Enabled = true });
@@ -62,7 +64,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 			public XmlTransmitVariant2()
 			{
 				Description = "XML send micro pipeline.";
-				Version = new Version(1, 0);
+				Version = new(1, 0);
 				PreAssemblers
 					.Add(new FailedMessageRoutingEnablerComponent { SuppressRoutingFailureReport = false })
 					.Add(new MicroPipelineComponent { Enabled = true });

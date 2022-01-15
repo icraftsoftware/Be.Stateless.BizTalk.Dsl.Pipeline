@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2012 - 2020 François Chabot
+// Copyright © 2012 - 2021 François Chabot
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ using Be.Stateless.BizTalk.Component;
 using FluentAssertions;
 using Microsoft.BizTalk.Component;
 using Xunit;
-using static Be.Stateless.DelegateFactory;
+using static FluentAssertions.FluentActions;
 
 namespace Be.Stateless.BizTalk.Dsl.Pipeline
 {
@@ -30,15 +30,15 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 		[Fact]
 		public void AddComponentToCompatibleStage()
 		{
-			var list = new ComponentList(new Stage(StageCategory.Decoder.Id));
-			Action(() => list.Add(new FailedMessageRoutingEnablerComponent())).Should().NotThrow();
+			var list = new ComponentList(new(StageCategory.Decoder.Id, PolicyFile.BTSReceivePolicy.Value));
+			Invoking(() => list.Add(new FailedMessageRoutingEnablerComponent())).Should().NotThrow();
 		}
 
 		[Fact]
 		public void AddComponentToIncompatibleStageThrows()
 		{
-			var list = new ComponentList(new Stage(StageCategory.Decoder.Id));
-			Action(() => list.Add(new PartyRes())).Should()
+			var list = new ComponentList(new(StageCategory.Decoder.Id, PolicyFile.BTSReceivePolicy.Value));
+			Invoking(() => list.Add(new PartyRes())).Should()
 				.Throw<ArgumentException>()
 				.WithMessage("Party resolution is made for any of the PartyResolver stages and is not compatible with a Decoder stage.*");
 		}
@@ -47,7 +47,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 		public void FetchComponentFromComponentList()
 		{
 			var component = new FailedMessageRoutingEnablerComponent();
-			var list = new ComponentList(new Stage(StageCategory.Decoder.Id)) {
+			var list = new ComponentList(new(StageCategory.Decoder.Id, PolicyFile.BTSReceivePolicy.Value)) {
 				component
 			};
 
@@ -57,13 +57,13 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 		[Fact]
 		public void FetchUnregisteredComponentFromComponentListThrows()
 		{
-			var list = new ComponentList(new Stage(StageCategory.Decoder.Id)) {
+			var list = new ComponentList(new(StageCategory.Decoder.Id, PolicyFile.BTSReceivePolicy.Value)) {
 				new FailedMessageRoutingEnablerComponent()
 			};
 
-			Action(() => list.Component<PartyRes>()).Should()
+			Invoking(() => list.Component<PartyRes>()).Should()
 				.Throw<InvalidOperationException>()
-				.WithMessage("Sequence contains no elements");
+				.WithMessage("Stage 'Decoder' has no 'PartyRes' component.");
 		}
 	}
 }

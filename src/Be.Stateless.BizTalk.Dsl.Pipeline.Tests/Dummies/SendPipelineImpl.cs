@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2012 - 2020 François Chabot
+// Copyright © 2012 - 2021 François Chabot
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,13 +16,16 @@
 
 #endregion
 
-namespace Be.Stateless.BizTalk.Dsl.Pipeline.Extensions
+using Be.Stateless.BizTalk.Dsl.Pipeline;
+
+namespace Be.Stateless.BizTalk.Dummies
 {
-	public static class PipelineExtensions
+	internal class SendPipelineImpl : SendPipeline
 	{
-		public static IDslSerializer GetPipelineDesignerDocumentSerializer(this IVisitable<IPipelineVisitor> pipeline)
+		public SendPipelineImpl()
 		{
-			return new PipelineDesignerDocumentSerializer(pipeline);
+			Description = "A send pipeline.";
+			Version = new(5, 6);
 		}
 	}
 }

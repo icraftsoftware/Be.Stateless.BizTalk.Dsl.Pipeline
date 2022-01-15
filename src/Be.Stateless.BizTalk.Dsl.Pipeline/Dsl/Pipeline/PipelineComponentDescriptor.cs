@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2012 - 2020 François Chabot
+// Copyright © 2012 - 2022 François Chabot
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,7 +17,10 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.BizTalk.Component.Interop;
+using Microsoft.BizTalk.PipelineEditor;
 
 namespace Be.Stateless.BizTalk.Dsl.Pipeline
 {
@@ -55,26 +58,27 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 
 		IPropertyBag IPipelineComponentDescriptor.Properties { get; set; }
 
-		void IVisitable<IPipelineVisitor>.Accept(IPipelineVisitor visitor)
+		IEnumerable<PropertyContents> IPipelineComponentDescriptor.PropertyContents
 		{
-			visitor.VisitComponent(this);
+			get
+			{
+				var bag = new PropertyBag();
+				Save(bag, false, false);
+				return bag.Properties.Cast<PropertyContents>().ToArray();
+			}
 		}
 
-		#endregion
-
-		private readonly T _pipelineComponent;
-
-		#region IBaseComponent Delegation
+		T1 IVisitable<IPipelineVisitor>.Accept<T1>(T1 visitor)
+		{
+			visitor.VisitComponent(this);
+			return visitor;
+		}
 
 		public string Name => _pipelineComponent.Name;
 
 		public string Description => _pipelineComponent.Description;
 
 		public string Version => _pipelineComponent.Version;
-
-		#endregion
-
-		#region IPersistPropertyBag Delegation
 
 		public void GetClassID(out Guid classID)
 		{
@@ -97,5 +101,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline
 		}
 
 		#endregion
+
+		private readonly T _pipelineComponent;
 	}
 }
