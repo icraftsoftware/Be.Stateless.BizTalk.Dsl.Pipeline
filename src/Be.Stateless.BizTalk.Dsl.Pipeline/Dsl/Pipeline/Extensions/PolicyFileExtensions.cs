@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2012 - 2021 François Chabot
+// Copyright © 2012 - 2022 François Chabot
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -23,7 +23,6 @@ using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 using Be.Stateless.BizTalk.Management;
-using Be.Stateless.Extensions;
 using Be.Stateless.Reflection;
 using Be.Stateless.Resources;
 using Be.Stateless.Xml;
@@ -47,16 +46,16 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.Extensions
 		internal static Document LoadPolicyDocument(string name)
 		{
 			// fallback on embedded resources to prevent build failure on build agent without BTS installed
-			return LoadPolicyFileDocument(name) ?? LoadPolicyResourceDocument(name);
+			return BizTalkInstallation.IsInstalled
+				? LoadPolicyFileDocument(name)
+				: LoadPolicyResourceDocument(name);
 		}
 
 		internal static Document LoadPolicyFileDocument(string name)
 		{
 			// see Microsoft.BizTalk.PipelineEditor.PipelineFile.Document::Load, Microsoft.BizTalk.PipelineOM, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
-			var path = BizTalkInstallation.DeveloperToolsPath
-				.IfNotNull(p => Path.Combine(p, "Pipeline Policy Files"))
-				.IfNotNull(p => Path.Combine(p, name));
-			return !path.IsNullOrEmpty() && File.Exists(path) ? (Document) Reflector.InvokeMethod(typeof(Document), "Load", path) : null;
+			var path = Path.Combine(BizTalkInstallation.DeveloperToolsPath, "Pipeline Policy Files", name);
+			return (Document) Reflector.InvokeMethod(typeof(Document), "Load", path);
 		}
 
 		internal static Document LoadPolicyResourceDocument(string name)

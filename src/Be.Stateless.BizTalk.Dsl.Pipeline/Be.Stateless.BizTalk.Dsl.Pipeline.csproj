@@ -48,9 +48,9 @@
 
   <ItemGroup>
     <PackageReference Include="Be.Stateless.BizTalk.Dsl.Abstractions" Version="2.1.22025.28826" />
-    <PackageReference Include="Be.Stateless.BizTalk.Explorer" Version="2.1.22025.23369" />
+    <PackageReference Include="Be.Stateless.BizTalk.Explorer" Version="2.1.22095.47956" />
     <PackageReference Include="Be.Stateless.Extensions" Version="2.1.22025.20499" />
-    <PackageReference Include="Be.Stateless.Reflection" Version="2.1.22025.20814" />
+    <PackageReference Include="Be.Stateless.Reflection" Version="2.1.22095.30556" />
     <PackageReference Include="Be.Stateless.Stream" Version="2.1.22025.21947" />
     <PackageReference Include="Be.Stateless.Xml" Version="2.1.22025.22704" />
     <PackageReference Include="BizTalk.Server.2020.Runtime" Version="1.0.3">
