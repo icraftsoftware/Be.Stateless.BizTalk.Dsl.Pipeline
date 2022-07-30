@@ -55,7 +55,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.Extensions
 		{
 			// see Microsoft.BizTalk.PipelineEditor.PipelineFile.Document::Load, Microsoft.BizTalk.PipelineOM, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
 			var path = Path.Combine(BizTalkInstallation.DeveloperToolsPath, "Pipeline Policy Files", name);
-			return (Document) Reflector.InvokeMethod(typeof(Document), "Load", path);
+			return (Document) Reflector.InvokeMethod<Document>("Load", path);
 		}
 
 		internal static Document LoadPolicyResourceDocument(string name)

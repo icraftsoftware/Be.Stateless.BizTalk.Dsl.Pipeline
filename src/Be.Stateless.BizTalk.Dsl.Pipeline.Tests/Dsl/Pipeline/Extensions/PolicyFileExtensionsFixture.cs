@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2012 - 2021 François Chabot
+// Copyright © 2012 - 2022 François Chabot
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 
 #endregion
 
-using System.IO;
 using Be.Stateless.BizTalk.Dummies;
 using Be.Stateless.BizTalk.Management;
 using FluentAssertions;
@@ -42,7 +41,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.Extensions
 		[SkippableFact]
 		public void LoadReceivePolicyFileDocument()
 		{
-			Skip.IfNot(BizTalkInstallation.IsInstalled && Directory.Exists(BizTalkInstallation.DeveloperToolsPath), "BizTalk Server is not installed.");
+			Skip.IfNot(BizTalkInstallation.IsInstalled);
 			PolicyFileExtensions.LoadPolicyFileDocument("BTSReceivePolicy.xml").Should().BeOfType<Document>().And.NotBeNull();
 		}
 
@@ -55,7 +54,7 @@ namespace Be.Stateless.BizTalk.Dsl.Pipeline.Extensions
 		[SkippableFact]
 		public void LoadTransmitPolicyFileDocument()
 		{
-			Skip.IfNot(BizTalkInstallation.IsInstalled && Directory.Exists(BizTalkInstallation.DeveloperToolsPath), "BizTalk Server is not installed.");
+			Skip.IfNot(BizTalkInstallation.IsInstalled);
 			PolicyFileExtensions.LoadPolicyFileDocument("BTSTransmitPolicy.xml").Should().BeOfType<Document>().And.NotBeNull();
 		}
 
